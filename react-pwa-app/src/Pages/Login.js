@@ -6,8 +6,12 @@ import LockSVG from "../Images/Lock.svg";
 import FacebookSVG from "../Images/facebook.svg";
 import TwitterSVG from "../Images/twitter.svg";
 import GPlusSVG from "../Images/g+.svg";
+import Button from "../Components/Button";
+import { useNavigate } from "react-router-dom";
+import TextInput from "../Components/TextInput";
 
 function Login() {
+  let navigate = useNavigate();
   return (
     <>
       <div className="main-container">
@@ -19,19 +23,23 @@ function Login() {
           </p>
         </div>
 
-        <div className="email">
-          <img src={EmailSVG} alt="" className="email-svg" />
-          <input type="text" className="email-input" placeholder="Email" />
-        </div>
-        <div className="password">
-          <img src={LockSVG} alt="" className="email-svg" />
-          <input
-            type="password"
-            className="password-input"
-            placeholder="Password"
-          />
-        </div>
-        <button className="login-button button">Login</button>
+        <TextInput
+          image={EmailSVG}
+          placeHolder="Email"
+          type="email"
+        ></TextInput>
+        <TextInput
+          image={LockSVG}
+          placeHolder="Password"
+          type="password"
+        ></TextInput>
+        <Button
+          onClick={() => {
+            navigate("/user/register");
+          }}
+          extraClasses="login-button"
+          buttonText="login"
+        ></Button>
         <div className="social-container">
           <a href="" className="social-links">
             <img src={FacebookSVG} alt="" />
