@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-// props expecting {image, placeHolder, type}
+// props expecting {image, placeHolder, type, inputValue, setInputValue}
 export default function TextInput(props) {
-  const [inputValue, setInputValue] = useState("");
   return (
     <div className="text-input-container">
       {props.image && (
@@ -12,9 +11,9 @@ export default function TextInput(props) {
         type={props.type}
         className="text-input"
         placeholder={props.placeHolder}
-        value={inputValue}
+        value={props.inputValue}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          props.setInputValue(e.target.value);
         }}
       />
     </div>

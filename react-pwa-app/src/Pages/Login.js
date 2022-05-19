@@ -1,21 +1,16 @@
-import React from "react";
-import Images from "../Images/logo-svg.svg";
-import LogoPNG from "../Images/logo-png.png";
-import EmailSVG from "../Images/Mail.svg";
-import LockSVG from "../Images/Lock.svg";
-import FacebookSVG from "../Images/facebook.svg";
-import TwitterSVG from "../Images/twitter.svg";
-import GPlusSVG from "../Images/g+.svg";
+import React, { useState } from "react";
 import Button from "../Components/Button";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../Components/TextInput";
 
 function Login() {
   let navigate = useNavigate();
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
   return (
     <>
       <div className="main-container">
-        <img src={LogoPNG} alt="" className="logo" />
+        <img src="/Images/logo-svg.svg" alt="" className="logo" />
         <div className="main-header">
           <h1 className="title">Login</h1>
           <p className="label">
@@ -24,14 +19,18 @@ function Login() {
         </div>
 
         <TextInput
-          image={EmailSVG}
+          image="/Images/Mail.svg"
           placeHolder="Email"
           type="email"
+          inputValue={emailValue}
+          setInputValue={setEmailValue}
         ></TextInput>
         <TextInput
-          image={LockSVG}
+          image="/Images/lock.svg"
           placeHolder="Password"
           type="password"
+          inputValue={passwordValue}
+          setInputValue={setPasswordValue}
         ></TextInput>
         <Button
           onClick={() => {
@@ -42,13 +41,13 @@ function Login() {
         ></Button>
         <div className="social-container">
           <a href="" className="social-links">
-            <img src={FacebookSVG} alt="" />
+            <img src="/Images/facebook.svg" alt="" />
           </a>
           <a href="" className="social-links">
-            <img src={TwitterSVG} alt="" />
+            <img src="/Images/twitter.svg" alt="" />
           </a>
           <a href="" className="social-links">
-            <img src={GPlusSVG} alt="" />
+            <img src="/Images/g+.svg" alt="" />
           </a>
         </div>
         <p className="label acct-label">Need an Account?</p>

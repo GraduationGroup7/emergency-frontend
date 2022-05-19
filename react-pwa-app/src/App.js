@@ -13,12 +13,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          <Route path="/user" element={<UserApp />}>
-            <Route path="register" element={<Register></Register>}></Route>
-          </Route>
-          <Route path="/agent" element={<AgentApp />}></Route>
-          <Route path="/authority" element={<AuthoritiesApp />}></Route>
-          <Route path="/admin" element={<AdminApp />}></Route>
+          <Route path="user" element={<UserApp />}></Route>
+          <Route path="register" element={<Register></Register>}></Route>
+          <Route path="agent" element={<AgentApp />}></Route>
+          <Route path="authority" element={<AuthoritiesApp />}></Route>
+          <Route path="admin" element={<AdminApp />}></Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -80,6 +80,13 @@ body {
   display: flex;
   justify-content: space-evenly;
 }
+.registration-form-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
 .main-header {
   display: flex;
   flex-direction: column;
@@ -91,6 +98,7 @@ body {
   margin-bottom: 20px;
 }
 .label {
+  color: var(--lightGrey);
   font-size: 0.9rem;
   text-align: center;
   width: 60%;
@@ -103,6 +111,8 @@ body {
   border-radius: 5px;
   text-transform: uppercase;
   border: 0;
+  background-color: var(--Black);
+  color: var(--BackScreen);
 }
 .login-button {
   background-color: var(--Black);
@@ -119,6 +129,9 @@ body {
   margin: 0 15px;
   flex-grow: 1;
   border: none;
+}
+.text-input-svg {
+  max-width: 16px;
 }
 .text-input-container {
   border: 1px solid #000000;
