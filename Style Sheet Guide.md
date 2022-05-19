@@ -14,3 +14,10 @@
 - Login as guest(button): #7A7A7A
 
 ## Sign Up Page
+
+## Main pages 
+- https://colorhunt.co/palette/ff6b6bffd93d6bcb774d96ff
+  -FF6B6B
+  -6BCB77
+  -4D96FF
+  -FFD93D
