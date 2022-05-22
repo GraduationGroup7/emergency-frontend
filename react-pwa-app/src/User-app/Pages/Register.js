@@ -13,7 +13,7 @@ export default function Register() {
   const [IDValue, setIDValue] = useState("");
   const [nationalityValue, setNationalityValue] = useState("");
   return (
-    <div className="registration-form-container">
+    <div className="general-mobile-container registration-form-container">
       <h1 className="registration-form-title">Create an Account</h1>
 
       <TextInput

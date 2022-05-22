@@ -9,7 +9,7 @@ function Login() {
   const [passwordValue, setPasswordValue] = useState("");
   return (
     <>
-      <div className="main-container">
+      <div className="general-mobile-container main-container">
         <img src="/Images/logo-svg.svg" alt="" className="logo" />
         <div className="main-header">
           <h1 className="title">Login</h1>

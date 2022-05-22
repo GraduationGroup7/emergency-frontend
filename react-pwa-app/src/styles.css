@@ -65,15 +65,19 @@ body {
   background-color: var(--BackScreen);
   font-family: Gadugi;
 }
-.main-container {
+.general-mobile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
   justify-content: space-around;
-  /* padding: 10px; */
-  /* margin: 10px; */
+}
+.sms-verify-container .text-input-container {
+  justify-self: center;
+}
+.main-container {
+  justify-content: space-around;
   box-sizing: border-box;
-  height: 100vh;
 }
 .social-container {
   width: 60vw;
@@ -81,10 +85,6 @@ body {
   justify-content: space-evenly;
 }
 .registration-form-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-evenly;
 }
 .main-header {
@@ -98,11 +98,11 @@ body {
   margin-bottom: 20px;
 }
 .label {
-  color: var(--lightGrey);
   font-size: 0.9rem;
   text-align: center;
   width: 60%;
   line-height: 1.1rem;
+  text-decoration: none;
 }
 .button {
   width: 70%;
@@ -145,6 +145,8 @@ body {
 }
 .acct-label {
   font-weight:500;
+  
+  color: var(--lightGrey);
 }
 .logo {
   /* height: 50px; */
