@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../Components/Button";
+import MyButton from "../Components/MyButton";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../Components/TextInput";
 
@@ -32,13 +32,13 @@ function Login() {
           inputValue={passwordValue}
           setInputValue={setPasswordValue}
         ></TextInput>
-        <Button
+        <MyButton
           onClick={() => {
             navigate("/user/register");
           }}
           extraClasses="login-button"
           buttonText="login"
-        ></Button>
+        ></MyButton>
         <div className="social-container">
           <a href="" className="social-links">
             <img src="/Images/facebook.svg" alt="" />

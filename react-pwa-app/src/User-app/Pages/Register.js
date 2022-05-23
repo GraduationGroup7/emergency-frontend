@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TextInput from "../../Components/TextInput";
-import Button from "../../Components/Button";
+import MyButton from "../../Components/MyButton";
 
 export default function Register() {
   const [nameValue, setNameValue] = useState("");
@@ -72,11 +72,11 @@ export default function Register() {
         inputValue={nationalityValue}
         setInputValue={setNationalityValue}
       ></TextInput>
-      <Button buttonText="Recieve SMS"></Button>
+      <MyButton buttonText="Recieve SMS"></MyButton>
       <Link className="label acct-label" to="/">
         Need an Account?
       </Link>
-      <Button buttonText="Login as guest"></Button>
+      <MyButton buttonText="Login as guest"></MyButton>
     </div>
   );
 }

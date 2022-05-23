@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../Components/Button";
+import MyButton from "../../Components/MyButton";
 import TextInput from "../../Components/TextInput";
 
 export default function SmsVerify() {
@@ -16,7 +16,7 @@ export default function SmsVerify() {
         inputValue={verificationCode}
         setInputValue={setVerificationCode}
       ></TextInput>
-      <Button buttonText="Confirm & Sign Up"></Button>
+      <MyButton buttonText="Confirm & Sign Up"></MyButton>
       <Link className="label acct-label" to="/">
         Cancel
       </Link>
