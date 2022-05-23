@@ -21,4 +21,5 @@ ReactDOM.render(
 
 // learned how to do the PWA thing from https://www.codica.com/blog/how-to-create-pwa-with-react/#step-1-set-up-a-simple-react-app
 
+// remember that pwa only works in built mode i.e. you have to build the app to see it working
 serviceWorkerRegistration.register();
