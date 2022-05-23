@@ -72,6 +72,12 @@ body {
   min-height: 100vh;
   justify-content: space-around;
 }
+#change-flex-to-row {
+  flex-direction: row;
+}
+#bottom-nav-container {
+  justify-content: space-evenly;
+}
 .sms-verify-container .text-input-container {
   justify-self: center;
 }
