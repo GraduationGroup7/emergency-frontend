@@ -5,6 +5,7 @@ import AgentApp from "./Agent-app/AgentApp";
 import AuthoritiesApp from "./Authorities-app/AuthoritiesApp";
 import Login from "./Pages/Login";
 import Page404 from "./Pages/Page404";
+import Profile from "./User-app/Pages/Profile";
 import Register from "./User-app/Pages/Register";
 import Report from "./User-app/Pages/Report";
 import SmsVerify from "./User-app/Pages/SmsVerify";
@@ -20,6 +21,8 @@ function App() {
             <Route path="register" element={<Register></Register>}></Route>
             <Route path="sms-verify" element={<SmsVerify></SmsVerify>}></Route>
             <Route path="report" element={<Report></Report>}></Route>
+            <Route path=":userid" element={<Profile></Profile>}></Route>
+
             <Route path="*" element={<Page404></Page404>}></Route>
           </Route>
 

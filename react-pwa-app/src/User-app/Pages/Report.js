@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyButton from "../../Components/MyButton";
 import { useSelector, useDispatch } from "react-redux";
 import { changeName } from "../../redux/userSlice";
@@ -21,11 +21,16 @@ export default function Report() {
   const [canvasShow, setCanvasShow] = useState(false);
   const [nameInput, setNameInput] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const [files, setFiles] = useState("");
 
   const dispatch = useDispatch();
 
   const handleClose = () => setCanvasShow(false);
   const handleShow = () => setCanvasShow(true);
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   return (
     <>
@@ -85,16 +90,24 @@ export default function Report() {
             Launch bottom OffCanvas
           </Button>
         </div>
-
+        {/* modal to show that you have reported successfully */}
         <MyModal show={modalShow} onHide={() => setModalShow(false)} />
 
+        {/* offcanvas conatianing the form to submit the emergency */}
         <Offcanvas show={canvasShow} onHide={handleClose} placement="bottom">
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title>Send Report</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            Some text as placeholder. In real life you can have the elements you
-            have chosen. Like, text, images, lists, etc.
+            <Form.Group
+              controlId="formFileMultiple"
+              className="mb-3"
+              value={files}
+              onChange={(e) => setFiles(e.target.value)}
+            >
+              <Form.Label>Multiple files input example</Form.Label>
+              <Form.Control type="file" multiple />
+            </Form.Group>
           </Offcanvas.Body>
         </Offcanvas>
 
