@@ -5,6 +5,11 @@ import { changeName } from "../../redux/userSlice";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import MyModal from "../../Components/MyModal";
 import BottomOffCanvas from "../../Components/BottomOffCanvas";
+import { useForm } from "react-hook-form";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 import {
   Navbar,
   Container,
@@ -14,24 +19,67 @@ import {
   NavDropdown,
   FormControl,
   Button,
+  InputGroup,
 } from "react-bootstrap";
 
+const axios = require("axios").default;
 export default function Report() {
   const user = useSelector((state) => state.user);
   const [canvasShow, setCanvasShow] = useState(false);
   const [nameInput, setNameInput] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const [files, setFiles] = useState("");
+  const [files, setFiles] = useState([]);
+  const [address, setAddress] = React.useState("");
+  const [coordinates, setCoordinates] = React.useState({
+    lat: null,
+    lng: null,
+  });
 
   const dispatch = useDispatch();
 
   const handleClose = () => setCanvasShow(false);
   const handleShow = () => setCanvasShow(true);
 
+  const handleSelect = async (value) => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+    setAddress(value);
+    setCoordinates(latLng);
+  };
+
+  // detials found here: https://www.pluralsight.com/guides/how-to-use-geolocation-call-in-reactjs
+  function findCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        console.log(position);
+      },
+      function(error) {
+        console.error("Error Code = " + error.code + " - " + error.message);
+      }
+    );
+  }
+
   useEffect(() => {
     console.log(files);
   }, [files]);
 
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    axios
+      .post("/user", {
+        photos: files,
+      })
+      .then(function(response) {
+        console.log(files);
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(files);
+        console.log(error);
+      });
+  };
   return (
     <>
       <>
@@ -99,15 +147,76 @@ export default function Report() {
             <Offcanvas.Title>Send Report</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Form.Group
-              controlId="formFileMultiple"
-              className="mb-3"
-              value={files}
-              onChange={(e) => setFiles(e.target.value)}
-            >
-              <Form.Label>Multiple files input example</Form.Label>
-              <Form.Control type="file" multiple />
-            </Form.Group>
+            {/* location search form */}
+
+            <div>
+              <PlacesAutocomplete
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    <p>Latitude: {coordinates.lat}</p>
+                    <p>Longitude: {coordinates.lng}</p>
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        placeholder="Recipient's username"
+                        aria-label="Recipient's username"
+                        aria-describedby="basic-addon2"
+                        {...getInputProps({ placeholder: "Type address" })}
+                      />
+                      <Button
+                        variant="outline-secondary"
+                        id="button-addon2"
+                        onClick={findCurrentLocation}
+                      >
+                        Find me
+                      </Button>
+                    </InputGroup>
+
+                    <div>
+                      {loading ? <div>...loading</div> : null}
+
+                      {suggestions.map((suggestion) => {
+                        const style = {
+                          backgroundColor: suggestion.active
+                            ? "#41b6e6"
+                            : "#fff",
+                        };
+
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, { style })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+
+            {/* images upload form */}
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Form.Group controlId="formFileMultiple" className="mb-3">
+                <Form.Label>Multiple files input example</Form.Label>
+                <Form.Control
+                  type="file"
+                  multiple
+                  {...register("photos")}
+                  onChange={(e) => setFiles(e.target.files)}
+                />
+              </Form.Group>
+              <Button type="submit">Submit form</Button>
+            </Form>
           </Offcanvas.Body>
         </Offcanvas>
 
