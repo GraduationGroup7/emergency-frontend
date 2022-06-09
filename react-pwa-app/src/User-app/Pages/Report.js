@@ -21,6 +21,17 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
+import { create_emergency } from "../../API/API";
+
+import { base64ArrayBuffer } from "../../Util/Encoding";
+
+const emergency_types = {
+  FIRE: 0,
+  MEDICAL: 1,
+  CRIME: 2,
+  ACCIDENTS: 3,
+  OTHER: 4,
+};
 
 const axios = require("axios").default;
 export default function Report() {
@@ -30,6 +41,7 @@ export default function Report() {
   const [modalShow, setModalShow] = useState(false);
   const [files, setFiles] = useState([]);
   const [address, setAddress] = React.useState("");
+  const [emergencyType, setEmergencyType] = useState(0);
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -51,7 +63,12 @@ export default function Report() {
   function findCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
       function(position) {
+        let newPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
         console.log(position);
+        setCoordinates(newPosition);
       },
       function(error) {
         console.error("Error Code = " + error.code + " - " + error.message);
@@ -60,25 +77,64 @@ export default function Report() {
   }
 
   useEffect(() => {
+    // call a function in place !!!
+    // (async () => {
+    //   if (!files.length) return;
+    //   let fileData = await files[0].arrayBuffer();
+    //   let encodedFile = base64ArrayBuffer(fileData);
+    //   console.log(encodedFile);
+    //   axios
+    //     .post("/user", {
+    //       encodedFile,
+    //     })
+    //     .then(function(response) {
+    //       console.log(files);
+    //       console.log(response);
+    //     })
+    //     .catch(function(error) {
+    //       console.log(files);
+    //       console.log(error);
+    //     });
+    //   console.log(fileData);
+    // })();
     console.log(files);
   }, [files]);
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
+  const testFileOnSubmit = async () => {
+    //details on this implementation found here: https://refine.dev/blog/how-to-multipart-file-upload-with-react-hook-form/
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append("files[]", file);
+    }
+    const res = await fetch("http://localhost:5000/upload-file", {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json());
+    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+  };
+
+  const onSubmit = async (data) => {
     console.log(data);
-    axios
-      .post("/user", {
-        photos: files,
-      })
-      .then(function(response) {
-        console.log(files);
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(files);
-        console.log(error);
-      });
+
+    /* Backend info
+      img_array,
+      latitude,
+      longitude,
+      description,
+      emergency_type_id,
+      video,
+      sound recording,
+      time,
+    */
+    let response = await create_emergency("post", "emergencies", {
+      img1: files[0],
+      latitude: coordinates.lat,
+      longitude: coordinates.lng,
+      description: "test description",
+      emergencyType,
+    });
   };
   return (
     <>
@@ -205,13 +261,13 @@ export default function Report() {
             </div>
 
             {/* images upload form */}
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(testFileOnSubmit)}>
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <Form.Label>Multiple files input example</Form.Label>
                 <Form.Control
                   type="file"
                   multiple
-                  {...register("photos")}
+                  {...register("files")}
                   onChange={(e) => setFiles(e.target.files)}
                 />
               </Form.Group>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import TextInput from "../../Components/TextInput";
 import MyButton from "../../Components/MyButton";
+import { register_customer } from "../../API/API";
 
 export default function Register() {
   const [nameValue, setNameValue] = useState("");
@@ -12,6 +13,39 @@ export default function Register() {
   const [phoneNumberValue, setPhoneNumberValue] = useState("");
   const [IDValue, setIDValue] = useState("");
   const [nationalityValue, setNationalityValue] = useState("");
+  const [firstNameValue, setFirstNameValue] = useState("");
+  const [lastNameValue, setLastNameValue] = useState("");
+  const [dayValue, setDayValue] = useState("");
+  const [monthValue, setMonthValue] = useState("");
+  const [yearValue, setYearValue] = useState("");
+
+  // primary key is "Email"
+  const onSubmit = async () => {
+    let obj = {
+      first_name: firstNameValue,
+      last_name: lastNameValue,
+      email: emailValue,
+      password: passwordValue,
+      password_confirmation: passwordValue,
+      dob: `${yearValue}-${monthValue}-${dayValue}`,
+      type: "user",
+    };
+    let response = await register_customer(obj);
+    if (!response.data) {
+      // msg failed
+      return;
+    }
+    if (response.data.token) {
+      console.log("Register successful!");
+      localStorage.setItem("authToken", response.data.token);
+    } else {
+      if (response.data.email) {
+        // response.data.email <--- is the error message from the backend
+        console.log(response.data.email);
+      }
+    }
+  };
+
   return (
     <div className="general-mobile-container registration-form-container">
       <h1 className="registration-form-title">Create an Account</h1>

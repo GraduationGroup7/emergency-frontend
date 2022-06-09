@@ -2,11 +2,23 @@ import React, { useState } from "react";
 import MyButton from "../Components/MyButton";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../Components/TextInput";
+import { login } from "../API/API";
 
 function Login() {
   let navigate = useNavigate();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+
+  const onSubmit = async () => {
+    let response = await login(emailValue, passwordValue);
+    if (response.accessToken) {
+      localStorage.setItem("authToken", response.accessToken);
+      console.log("login success!");
+    } else {
+      console.log("login fail!");
+    }
+  };
+
   return (
     <>
       <div className="general-mobile-container main-container">
