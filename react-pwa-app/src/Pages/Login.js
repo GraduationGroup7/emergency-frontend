@@ -1,26 +1,39 @@
 import React, { useState } from "react";
-import MyButton from "../Components/MyButton";
-import { useNavigate } from "react-router-dom";
-import TextInput from "../Components/TextInput";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../API/API";
+import { Form, Button, Alert } from "react-bootstrap";
 
 function Login() {
   let navigate = useNavigate();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [show, setShow] = useState(false);
 
-  const onSubmit = async () => {
-    let response = await login(emailValue, passwordValue);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    let response = await login({ email: emailValue, password: passwordValue });
     if (response.accessToken) {
       localStorage.setItem("authToken", response.accessToken);
-      console.log("login success!");
+      navigate("/user/report");
+      console.log("Login was Successful");
     } else {
-      console.log("login fail!");
+      setErrorMsg(response.message);
+      setShow(true);
     }
   };
 
   return (
     <>
+      <Alert
+        show={show}
+        variant="danger"
+        onClose={() => setShow(false)}
+        dismissible
+      >
+        <Alert.Heading>You got an error! Try Again </Alert.Heading>
+        <p>{errorMsg}</p>
+      </Alert>
       <div className="general-mobile-container main-container">
         <img src="/Images/logo-svg.svg" alt="" className="logo" />
         <div className="main-header">
@@ -30,27 +43,33 @@ function Login() {
           </p>
         </div>
 
-        <TextInput
-          image="/Images/Mail.svg"
-          placeHolder="Email"
-          type="email"
-          inputValue={emailValue}
-          setInputValue={setEmailValue}
-        ></TextInput>
-        <TextInput
-          image="/Images/lock.svg"
-          placeHolder="Password"
-          type="password"
-          inputValue={passwordValue}
-          setInputValue={setPasswordValue}
-        ></TextInput>
-        <MyButton
-          onClick={() => {
-            navigate("/user/register");
-          }}
-          extraClasses="login-button"
-          buttonText="login"
-        ></MyButton>
+        <Form onSubmit={onSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={emailValue}
+              onChange={(e) => setEmailValue(e.target.value)}
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={passwordValue}
+              onChange={(e) => setPasswordValue(e.target.value)}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
         <div className="social-container">
           <a href="" className="social-links">
             <img src="/Images/facebook.svg" alt="" />
@@ -62,8 +81,9 @@ function Login() {
             <img src="/Images/g+.svg" alt="" />
           </a>
         </div>
-        <p className="label acct-label">Need an Account?</p>
-        <button className="guest-button button">Login as a Guest</button>
+        <Link to={"/user/register"}>
+          <p className="label acct-label">Need an Account?</p>
+        </Link>
       </div>
     </>
   );

@@ -6,7 +6,9 @@ const request = async (method, path, body) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("authToken") || "",
+      Authorization: localStorage.getItem("authToken")
+        ? "Bearer " + localStorage.getItem("authToken")
+        : "",
     },
     body: JSON.stringify(body),
   });
@@ -17,12 +19,11 @@ const get_emergencies = async () => {
   return await request("get", "emergencies");
 };
 
+const login = async (body) => {
+  return await request("post", "auth/login", body);
+};
 const create_emergency = async (body) => {
   return await request("post", "emergencies", body);
-};
-
-const login = async (email, password) => {
-  return await request("post", "auth/login", { email, password });
 };
 
 const register_customer = async (data) => {
