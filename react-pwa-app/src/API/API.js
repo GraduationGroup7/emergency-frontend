@@ -1,18 +1,20 @@
 import config from "./config.json";
+import axios from "axios";
 
-const request = async (method, path, body) => {
-  const rawResponse = await fetch(`${config.api}/${path}`, {
-    method: method.toUpperCase(),
+const request = async (method, path, body, contentType) => {
+  const rawResponse = await axios({
+    method: method.toLowerCase(),
+    url: `${config.api}/${path}`,
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: "*/*",
+      "Content-Type": contentType || "application/json",
       Authorization: localStorage.getItem("authToken")
         ? "Bearer " + localStorage.getItem("authToken")
         : "",
     },
-    body: JSON.stringify(body),
+    data: body,
   });
-  return await rawResponse.json();
+  return rawResponse;
 };
 
 const get_emergencies = async () => {
@@ -23,7 +25,7 @@ const login = async (body) => {
   return await request("post", "auth/login", body);
 };
 const create_emergency = async (body) => {
-  return await request("post", "emergencies", body);
+  return await request("post", "emergencies", body, "multipart/form-data");
 };
 
 const register_customer = async (data) => {

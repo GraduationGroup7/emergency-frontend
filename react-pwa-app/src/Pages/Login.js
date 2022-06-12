@@ -13,6 +13,8 @@ function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     let response = await login({ email: emailValue, password: passwordValue });
+    response = response.data;
+    console.log(response);
     if (response.accessToken) {
       localStorage.setItem("authToken", response.accessToken);
       navigate("/user/report");
