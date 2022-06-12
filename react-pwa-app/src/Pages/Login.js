@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../API/API";
+import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { changeType } from "../redux/userTypeSlice";
 
 function Login() {
   let navigate = useNavigate();
@@ -9,6 +11,8 @@ function Login() {
   const [passwordValue, setPasswordValue] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [show, setShow] = useState(false);
+  const userType = useSelector((state) => state.userType.value);
+  const dispatch = useDispatch();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +21,8 @@ function Login() {
     console.log(response);
     if (response.accessToken) {
       localStorage.setItem("authToken", response.accessToken);
-      navigate("/user/report");
+      navigate(`/${response.userData.type}/`);
+      dispatch(changeType(response.userData.type));
       console.log("Login was Successful");
     } else {
       setErrorMsg(response.message);

@@ -3,12 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeName } from "../../redux/userSlice";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import MyModal from "../../Components/MyModal";
-import BottomOffCanvas from "../../Components/BottomOffCanvas";
 import { useForm } from "react-hook-form";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
 import {
   Navbar,
   Container,
@@ -22,6 +17,7 @@ import {
 } from "react-bootstrap";
 import { create_emergency } from "../../API/API";
 import NoPermission from "../../Pages/NoPermission";
+import { Navigate, Link } from "react-router-dom";
 
 const emergency_types = ["Fire", "Medical", "Crime", "Accidents", "Other"];
 
@@ -87,7 +83,7 @@ export default function Report() {
   };
 
   const onSubmit = async (e) => {
-    /* Backend info
+    /* Backend requirements
       img_array,
       latitude,
       longitude,
@@ -180,7 +176,9 @@ export default function Report() {
               <Button variant="primary" onClick={() => setModalShow(true)}>
                 show Modal
               </Button>
-              <Button variant="danger">Call Help</Button>
+              <Button href="tel:155" variant="danger">
+                Call Help
+              </Button>
               <Button variant="primary" onClick={handleShow}>
                 Report an Emergency
               </Button>

@@ -32,4 +32,8 @@ const register_customer = async (data) => {
   return await request("post", "auth/customer/register", data);
 };
 
-export { create_emergency, login, register_customer };
+const get_user_info = async () => {
+  return await request("get", "user");
+};
+
+export { create_emergency, login, register_customer, get_user_info };

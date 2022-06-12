@@ -159,3 +159,10 @@ body {
   width: 25%;
   border-radius: 20px;
 }
+
+/* bootstrap stuff */
+
+.myTabClass ul > li > a {
+  background-color: gray;
+  color: white;
+}
