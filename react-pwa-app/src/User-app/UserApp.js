@@ -14,7 +14,10 @@ export default function UserApp() {
     <>
       {authToken ? (
         <>
-          <Outlet></Outlet> {/* bottom navbar */}
+          <div className="d-flex justify-items-center main-area-minus-bot-nav m-auto overflow-auto">
+            <Outlet></Outlet>
+          </div>{" "}
+          {/* bottom navbar */}
           <Navbar
             bg="light"
             expand="lg"
