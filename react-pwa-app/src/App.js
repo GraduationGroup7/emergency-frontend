@@ -16,6 +16,7 @@ import NewReports from "./Authorities-app/Pages/NewReports";
 
 import Pusher from "pusher-js";
 import config from "../src/API/config.json";
+import CallHelp from "./User-app/Pages/CallHelp";
 
 function App() {
   useEffect(() => {
@@ -39,7 +40,8 @@ function App() {
             <Route path="register" element={<Register></Register>}></Route>
             <Route path="sms-verify" element={<SmsVerify></SmsVerify>}></Route>
             <Route index element={<Report></Report>}></Route>
-            <Route path=":userid" element={<Profile></Profile>}></Route>
+            <Route path="profile" element={<Profile></Profile>}></Route>
+            <Route path="call-help" element={<CallHelp />}></Route>
 
             <Route path="*" element={<Page404></Page404>}></Route>
           </Route>
