@@ -67,6 +67,20 @@ body {
   background-color: var(--BackScreen);
   font-family: Gadugi;
 }
+.main-area-minus-bot-nav {
+  height: calc(100vh - 70px);
+}
+.col {
+  text-align: center;
+}
+.col > .btn {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  height: 100px;
+}
+.emergency-number-icons {
+  font-size: 3rem !important
+}
 .general-mobile-container {
   display: flex;
   flex-direction: column;

@@ -119,9 +119,6 @@ export default function Report() {
           <Button variant="primary" onClick={() => setModalShow(true)}>
             show Modal
           </Button>
-          <Button href="tel:155" variant="danger">
-            Call Help
-          </Button>
           <Button variant="primary" onClick={handleShow}>
             Report an Emergency
           </Button>

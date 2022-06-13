@@ -8,14 +8,17 @@ export default function Profile() {
 
   return (
     <>
-      <Card>
+      <Card style={{ width: "100vw" }}>
         <Card.Header>User Profile</Card.Header>
         <Card.Body>
           <Card.Title>{userInfo.name}</Card.Title>
-          <ListGroup variant="flush">
-            <ListGroup.Item>{userInfo.email}</ListGroup.Item>
-            <ListGroup.Item>{userInfo.type}</ListGroup.Item>
-          </ListGroup>
+          <hr />
+          <dl class="row">
+            <dt class="col-3">Email</dt>
+            <dd class="col-9">{userInfo.email}</dd>
+            <dt class="col-3">Type</dt>
+            <dd class="col-9">{userInfo.type}</dd>
+          </dl>
         </Card.Body>
       </Card>
     </>
