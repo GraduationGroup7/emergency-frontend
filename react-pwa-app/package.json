@@ -21,6 +21,7 @@
     "react-dom": "^18.0.0",
     "react-google-places-autocomplete": "^3.3.4",
     "react-hook-form": "^7.31.2",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-places-autocomplete": "^7.3.0",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",

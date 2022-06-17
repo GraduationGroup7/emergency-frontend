@@ -15,6 +15,7 @@ import {
   FormControl,
   Button,
   InputGroup,
+  Alert,
 } from "react-bootstrap";
 import { create_emergency } from "../../API/API";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ export default function Report() {
   const [files, setFiles] = useState([]);
   const [emergencyDescription, SetEmergencyDescription] = useState("");
   const [emergencyType, setEmergencyType] = useState(0);
+  const [reportError, setReportError] = useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -49,7 +51,7 @@ export default function Report() {
         setCoordinates(newPosition);
       },
       function(error) {
-        console.error("Error Code = " + error.code + " - " + error.message);
+        setReportError(error.message);
       }
     );
   }
@@ -108,21 +110,40 @@ export default function Report() {
     Object.keys(info).forEach((key) => {
       formData.append(key, info[key]);
     });
-    await create_emergency(formData);
+    try {
+      await create_emergency(formData);
+      // emergency created successfully
+      setModalShow(true);
+      setCanvasShow(false);
+    } catch (error) {
+      //error occured
+      console.log(error);
+      setCanvasShow(false);
+      setReportError(error.message);
+    }
   };
   return (
     <>
       <>
-        <div className="main-content">
+        {/* alert to prompt the user to try posting the emergency again */}
+        {reportError && (
+          <Alert
+            variant="danger"
+            onClose={() => setReportError("")}
+            dismissible
+          >
+            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+            <p>detailed error is: {reportError}</p>
+          </Alert>
+        )}
+        <div className="main-content d-flex justify-content-center flex-column align-items-center m-auto">
           <h1>Emergency Assitance Needed?</h1>
           <h5>Press the button to report an emergency</h5>
-          <Button variant="primary" onClick={() => setModalShow(true)}>
-            show Modal
-          </Button>
           <Button variant="primary" onClick={handleShow}>
             Report an Emergency
           </Button>
         </div>
+
         {/* modal to show that you have reported successfully */}
         <MyModal show={modalShow} onHide={() => setModalShow(false)} />
 

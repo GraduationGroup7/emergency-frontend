@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../redux/userInfoSlice";
+import GeneralErrorAlert from "../Components/GeneralErrorAlert";
 
 function Login() {
   let navigate = useNavigate();
-  const userInfo = useSelector((state) => state.userInfo.value);
   const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    // this way any component can just reroute to login to "logout"
+    localStorage.removeItem("authToken");
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let response = await login({ email: emailValue, password: passwordValue });
-
-    response = response.data;
-    console.log(response);
-    if (response.accessToken) {
+    try {
+      let response = await login({
+        email: emailValue,
+        password: passwordValue,
+      });
+      response = response.data;
+      console.log("this is the response: ", response);
       localStorage.setItem("authToken", response.accessToken);
       let userInfoRequest = await get_user_info();
 
@@ -28,23 +34,22 @@ function Login() {
       dispatch(updateUser(userInfoRequest.data));
       navigate(`/${response.userData.type}/`);
       console.log("Login was Successful");
-    } else {
-      setErrorMsg(response.message);
-      setShow(true);
+    } catch (error) {
+      console.log("unsuccesful Login Attempt ", error);
+      setErrorMsg(
+        error.response.data
+          ? `${error.message}, ${error.response.data.data}`
+          : error.message
+      );
     }
   };
 
   return (
     <>
-      <Alert
-        show={show}
-        variant="danger"
-        onClose={() => setShow(false)}
-        dismissible
-      >
-        <Alert.Heading>You got an error! Try Again </Alert.Heading>
-        <p>{errorMsg}</p>
-      </Alert>
+      <GeneralErrorAlert
+        errorMsg={errorMsg}
+        setErrorMsg={setErrorMsg}
+      ></GeneralErrorAlert>
       <div className="general-mobile-container main-container">
         <img src="/Images/logo-svg.svg" alt="" className="logo" />
         <div className="main-header">
@@ -93,7 +98,7 @@ function Login() {
           </a>
         </div>
         <Link to={"/user/register"}>
-          <p className="label acct-label">Need an Account?</p>
+          <p className="label acct-label">Register a New User</p>
         </Link>
       </div>
     </>

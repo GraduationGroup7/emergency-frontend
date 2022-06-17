@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export default function Profile() {
   const userInfo = useSelector((state) => state.userInfo.value);
-  useEffect(() => {}, []);
 
   return (
     <>

@@ -7,14 +7,13 @@ export default function UserApp() {
   let navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
   const Logout = () => {
-    localStorage.removeItem("authToken");
     navigate("/");
   };
   return (
     <>
       {authToken ? (
         <>
-          <div className="d-flex justify-items-center main-area-minus-bot-nav m-auto overflow-auto">
+          <div className="d-flex flex-column main-area-minus-bot-nav m-auto overflow-auto">
             <Outlet></Outlet>
           </div>{" "}
           {/* bottom navbar */}
