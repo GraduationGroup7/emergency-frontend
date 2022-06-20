@@ -24,7 +24,7 @@ export default function Chat() {
         border="dark"
         style={{ width: "18rem" }}
         onClick={(e) => {
-          navigate(`user/chatroom/${emergency.chat_room_id}`);
+          navigate(`/user/chatroom/${emergency.chat_room_id}`);
         }}
       >
         <Card.Header>Emergency Chat Room</Card.Header>

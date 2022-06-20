@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { register_customer } from "../../API/API";
 import { Form, Button } from "react-bootstrap";
-import GeneralErrorAlert from "../../Components/GeneralErrorAlert";
+import { updateError } from "../../redux/errorInfoSlice";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
+  const dispatch = useDispatch();
+
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [phoneNumberValue, setPhoneNumberValue] = useState("");
   const [firstNameValue, setFirstNameValue] = useState("");
   const [lastNameValue, setLastNameValue] = useState("");
   const [dobValue, setDobValue] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
 
   let navigate = useNavigate();
 
@@ -38,27 +40,28 @@ export default function Register() {
     try {
       let response = await register_customer(obj);
       response = response.data;
-      localStorage.setItem("authToken", response.data.token);
-      console.log("response is: ", response);
-      console.log("response data is: ", response.data);
-      console.log("response request_id is: ", response.data.request_id);
-      console.log("response user id is: ", response.data.user.id);
+      // localStorage.setItem("authToken", response.data.token);
+      // console.log("response is: ", response);
+      // console.log("response data is: ", response.data);
+      // console.log("response request_id is: ", response.data.request_id);
+      // console.log("response user id is: ", response.data.user.id);
 
       navigate(
         `/user/sms-verify/${response.data.request_id}/${response.data.user.id}`
       );
     } catch (error) {
       console.log("error", error);
-      // setErrorMsg(error);
+      dispatch(
+        updateError({
+          techError: error.message,
+          descriptiveError: error.response.data.data,
+        })
+      );
     }
   };
 
   return (
     <>
-      <GeneralErrorAlert
-        errorMsg={errorMsg}
-        setErrorMsg={setErrorMsg}
-      ></GeneralErrorAlert>
       <div className="general-mobile-container registration-form-container">
         <h1 className="registration-form-title">Create an Account</h1>
 

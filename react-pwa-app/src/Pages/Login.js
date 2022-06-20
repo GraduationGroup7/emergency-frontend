@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/userInfoSlice";
 import GeneralErrorAlert from "../Components/GeneralErrorAlert";
+import { updateError } from "../redux/errorInfoSlice";
 
 function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     // this way any component can just reroute to login to "logout"
@@ -36,72 +36,66 @@ function Login() {
       console.log("Login was Successful");
     } catch (error) {
       console.log("unsuccesful Login Attempt ", error);
-      setErrorMsg(
-        error.response.data
-          ? `${error.message}, ${error.response.data.data}`
-          : error.message
+      dispatch(
+        updateError({
+          techError: error.message,
+          descriptiveError: error.response.data.data,
+        })
       );
     }
   };
 
   return (
-    <>
-      <GeneralErrorAlert
-        errorMsg={errorMsg}
-        setErrorMsg={setErrorMsg}
-      ></GeneralErrorAlert>
-      <div className="general-mobile-container main-container">
+    <div className="login__parent__container">
+      <div className="login__container">
         <img src="/Images/logo-svg.svg" alt="" className="logo" />
-        <div className="main-header">
-          <h1 className="title">Login</h1>
-          <p className="label">
-            Enter your login details to sign in to your account
-          </p>
-        </div>
+        <div className="login__form__container">
+          <div className="main__header">
+            <h1 className="main__header__title">Login</h1>
+            <p className="main-header__text">
+              Enter your login details to sign in to your account
+            </p>
+          </div>
 
-        <Form onSubmit={onSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={emailValue}
-              onChange={(e) => setEmailValue(e.target.value)}
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+          <Form className="form" onSubmit={onSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label className="form__label">Email address</Form.Label>
+              <Form.Control
+                className="form__input"
+                type="email"
+                placeholder="Enter email"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+              />
+              <Form.Text className="text-muted form__label">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={passwordValue}
-              onChange={(e) => setPasswordValue(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
-        <div className="social-container">
-          <a href="" className="social-links">
-            <img src="/Images/facebook.svg" alt="" />
-          </a>
-          <a href="" className="social-links">
-            <img src="/Images/twitter.svg" alt="" />
-          </a>
-          <a href="" className="social-links">
-            <img src="/Images/g+.svg" alt="" />
-          </a>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label className="form__label">Password</Form.Label>
+              <Form.Control
+                className="form__input"
+                type="password"
+                placeholder="Password"
+                value={passwordValue}
+                onChange={(e) => setPasswordValue(e.target.value)}
+              />
+            </Form.Group>
+            <Button
+              className="mb-2 submit__button"
+              variant="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+          <Link to={"/user/register"} className="link__register">
+            <p>Register a New User</p>
+          </Link>
         </div>
-        <Link to={"/user/register"}>
-          <p className="label acct-label">Register a New User</p>
-        </Link>
       </div>
-    </>
+    </div>
   );
 }
 

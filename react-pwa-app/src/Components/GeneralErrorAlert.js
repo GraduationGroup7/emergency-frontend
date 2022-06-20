@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
+import { updateError } from "../redux/errorInfoSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-// I am only using the error message for everything, it might be confusing but this way I only need 2 prop instead of 3
+// techError == error.message
+// descriptiveError == error.data.data
 
-export default function GeneralErrorAlert({ errorMsg, setErrorMsg }) {
+export default function GeneralErrorAlert() {
+  const errorInfo = useSelector((state) => state.errorInfo.value);
+  const dispatch = useDispatch();
+
+  // @TODO: try to elemenate the use of extra state and trigger rerendering on redux state change. (Hint, it is prolly immutability of state changing in reducer)
+  // useEffect(() => {
+  //   // somehow the component doesnt rerender when the redux state changes???
+  //   console.log("component re-rendered");
+  // }, []);
+  // useEffect(() => {
+  //   console.log("error Info changed: ", errorInfo);
+  // }, [errorInfo]);
   return (
     <Alert
-      show={errorMsg}
+      show={errorInfo.techError != undefined}
       variant="danger"
-      onClose={() => setErrorMsg("")}
+      onClose={() => dispatch(updateError({}))}
       dismissible
     >
       <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-      <p>{errorMsg}</p>
+      <p>{`${errorInfo.techError}, ${errorInfo.descriptiveError} `}</p>
     </Alert>
   );
 }

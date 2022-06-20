@@ -19,7 +19,7 @@ export default function SmsVerify() {
     };
     try {
       let smsVerificationResponse = await sms_verify(requestBody);
-      navigate("/user/");
+      navigate("/");
     } catch (error) {
       setErrorMsg(
         error.response.data

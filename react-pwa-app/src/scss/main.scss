@@ -1,0 +1,20 @@
+
+// you have to import this from the node_modules folder
+
+@import '../../node_modules/bootstrap/scss/_functions';
+@import '../../node_modules/bootstrap/scss/_variables';
+@import '../../node_modules/bootstrap/scss/mixins/_breakpoints';
+@import "./reset", "./login";
+
+
+body {
+    // set the background color to blue
+    background-color: #006699;
+    height: 100vh;
+}
+#root{
+    width: 100%;
+    height: 100%;
+}
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";

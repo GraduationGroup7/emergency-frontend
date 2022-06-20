@@ -21,6 +21,10 @@ const get_emergencies = async () => {
   return await request("get", "emergencies");
 };
 
+const send_chat_message = async (chatroom_id, body) => {
+  return await request("post", `chat_rooms/${chatroom_id}/`, body);
+};
+
 const get_messages = async (chatroom_id, additionalParams = {}) => {
   const params = new URLSearchParams(additionalParams).toString();
   return await request("get", `chat_rooms/${chatroom_id}/messages?${params}`);
@@ -57,4 +61,5 @@ export {
   sms_verify,
   get_user_emergencies,
   get_messages,
+  send_chat_message,
 };
