@@ -4,11 +4,7 @@ import NoPermission from "../Pages/NoPermission";
 import { Navbar, Nav } from "react-bootstrap";
 
 export default function UserApp() {
-  let navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
-  const Logout = () => {
-    navigate("/");
-  };
   return (
     <>
       {authToken ? (
@@ -44,7 +40,10 @@ export default function UserApp() {
                 </Link>
               </Nav.Item>
               <Nav.Item>
-                <i className="bi bi-box-arrow-right fa-lg" onClick={Logout}></i>
+                {/* remember that I implemented logout just by rerouting to login page */}
+                <Link to={"/"} className="link-dark">
+                  <i className="bi bi-box-arrow-right fa-lg"></i>
+                </Link>
               </Nav.Item>
             </Nav>
             {/* </Container> */}

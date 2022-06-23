@@ -12,11 +12,11 @@ export default function Profile() {
         <Card.Body>
           <Card.Title>{userInfo.name}</Card.Title>
           <hr />
-          <dl class="row">
-            <dt class="col-3">Email</dt>
-            <dd class="col-9">{userInfo.email}</dd>
-            <dt class="col-3">Type</dt>
-            <dd class="col-9">{userInfo.type}</dd>
+          <dl className="row">
+            <dt className="col-3">Email</dt>
+            <dd className="col-9">{userInfo.email}</dd>
+            <dt className="col-3">Type</dt>
+            <dd className="col-9">{userInfo.type}</dd>
           </dl>
         </Card.Body>
       </Card>

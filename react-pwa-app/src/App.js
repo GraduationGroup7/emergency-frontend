@@ -5,7 +5,8 @@ import AgentApp from "./Agent-app/AgentApp";
 import AuthoritiesApp from "./Authorities-app/AuthoritiesApp";
 import Login from "./Pages/Login";
 import Page404 from "./Pages/Page404";
-
+import Pusher from "pusher-js";
+import config from "./API/config.json";
 // User App pages
 import Chat from "../src/User-app/Pages/Chat";
 import Profile from "./User-app/Pages/Profile";
@@ -16,14 +17,33 @@ import UserApp from "./User-app/UserApp";
 
 // Authorities App pages
 import NewReports from "./Authorities-app/Pages/NewReports";
-
-import config from "../src/API/config.json";
 import CallHelp from "./User-app/Pages/CallHelp";
 import Chatroom from "./Pages/Chatroom";
 import MainWrapper from "./Pages/MainWrapper";
 
+// Agent App Pages
+import EmergencyAssignment from "./Agent-app/EmergencyAssignment";
+
+// Admin App Pages
+import DataGridComponent from "./Components/DataGridComponent";
+
+const pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
+  cluster: "eu",
+  encrypted: true,
+  authEndpoint: `${config.api}/pusher/auth`,
+  auth: {
+    headers: {
+      Authorization: localStorage.getItem("authToken")
+        ? "Bearer " + localStorage.getItem("authToken")
+        : "",
+    },
+  },
+});
+
 function App() {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("App rerendered");
+  }, []);
 
   return (
     <>
@@ -49,9 +69,12 @@ function App() {
             </Route>
 
             <Route path="agent" element={<AgentApp />}>
-              <Route index element={<Report></Report>}></Route>
+              <Route
+                index
+                element={<EmergencyAssignment></EmergencyAssignment>}
+              ></Route>
               <Route path="profile" element={<Profile></Profile>}></Route>
-              <Route path="call-help" element={<CallHelp />}></Route>
+              <Route path="report" element={<Report />}></Route>
               <Route path="chat" element={<Chat></Chat>}></Route>
               <Route
                 path="chatroom/:chatroom_id"
@@ -60,7 +83,12 @@ function App() {
               <Route path="*" element={<Page404></Page404>}></Route>
             </Route>
             <Route path="authority" element={<AuthoritiesApp />} />
-            <Route path="admin" element={<AdminApp />}></Route>
+            <Route path="admin" element={<AdminApp />}>
+              <Route
+                path="tables/:table_name"
+                element={<DataGridComponent></DataGridComponent>}
+              ></Route>
+            </Route>
             <Route path="*" element={<Page404></Page404>}></Route>
           </Route>
         </Routes>
@@ -70,3 +98,5 @@ function App() {
 }
 
 export default App;
+
+export { pusher };

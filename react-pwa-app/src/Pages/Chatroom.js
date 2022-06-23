@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import { get_messages, send_chat_message } from "../API/API";
-import Pusher from "pusher-js";
+import { pusher } from "../App";
 import { useSelector } from "react-redux";
 
 export default function Chatroom() {
@@ -17,11 +17,7 @@ export default function Chatroom() {
   // get user info from redux store
   const userInfo = useSelector((state) => state.userInfo);
   useEffect(() => {
-    const pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
-      cluster: "eu",
-      encrypted: true,
-    });
-    const channel = pusher.subscribe(`chat.${chatroom_id}`);
+    const channel = pusher.subscribe(`private-chat.${chatroom_id}`);
     channel.bind("message", (data) => {
       console.log("I got called");
       appendMsg(data.user.name, data.chatMessage.message);

@@ -34,6 +34,10 @@ const sms_verify = async (body) => {
   return await request("post", "auth/customer/verify", body);
 };
 
+const get_table_list = async () => {
+  return await request("get", "admin/tables");
+};
+
 const get_user_emergencies = async () => {
   return await request("get", "user/emergencies");
 };
@@ -53,6 +57,9 @@ const get_user_info = async () => {
   return await request("get", "user");
 };
 
+const get_table_data = async (path, searchParams) => {
+  return await request("get", `${path}?${searchParams}`);
+};
 export {
   create_emergency,
   login,
@@ -62,4 +69,6 @@ export {
   get_user_emergencies,
   get_messages,
   send_chat_message,
+  get_table_data,
+  get_table_list,
 };
