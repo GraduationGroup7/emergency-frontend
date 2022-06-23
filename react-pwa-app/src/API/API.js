@@ -57,6 +57,10 @@ const get_user_info = async () => {
   return await request("get", "user");
 };
 
+// this gets the info for agents, emergencies, authorities, or customers (to be used by the custom components)
+const get_detailed_info = async (path) => {
+  return await request("get", path);
+};
 const get_table_data = async (path, searchParams) => {
   return await request("get", `${path}?${searchParams}`);
 };
@@ -71,4 +75,5 @@ export {
   send_chat_message,
   get_table_data,
   get_table_list,
+  get_detailed_info,
 };

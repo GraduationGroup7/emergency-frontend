@@ -7,6 +7,12 @@ import Login from "./Pages/Login";
 import Page404 from "./Pages/Page404";
 import Pusher from "pusher-js";
 import config from "./API/config.json";
+import Authority from "./Components/Authority";
+import Agent from "./Components/Agent";
+import Emergency from "./Components/Emergency";
+import Customer from "./Components/Customer";
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+
 // User App pages
 import Chat from "../src/User-app/Pages/Chat";
 import Profile from "./User-app/Pages/Profile";
@@ -40,6 +46,14 @@ const pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
   },
 });
 
+const beamsClient = new PusherPushNotifications.Client({
+  instanceId: "51968e33-90dc-4ded-aa46-5c803b1aa9f3",
+});
+
+beamsClient.start().then(() => {
+  console.log("I am connected and inside");
+});
+
 function App() {
   useEffect(() => {
     console.log("App rerendered");
@@ -50,6 +64,19 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainWrapper></MainWrapper>}>
+            <Route
+              path="/authoritys/:id"
+              element={<Authority></Authority>}
+            ></Route>
+            <Route path="/agents/:id" element={<Agent></Agent>}></Route>
+            <Route
+              path="/emergencies/:id"
+              element={<Emergency></Emergency>}
+            ></Route>
+            <Route
+              path="/customers/:id"
+              element={<Customer></Customer>}
+            ></Route>
             <Route index element={<Login />}></Route>
             <Route path="user/register" element={<Register></Register>}></Route>
             <Route

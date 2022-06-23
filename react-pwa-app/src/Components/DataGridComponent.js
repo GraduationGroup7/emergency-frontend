@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { get_table_data } from "../API/API";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function DataGridComponent() {
   const [columns, setColumns] = useState([]);
@@ -13,6 +13,7 @@ export default function DataGridComponent() {
     page: page,
   });
 
+  let navigate = useNavigate();
   let { table_name } = useParams();
   console.log(table_name);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +63,10 @@ export default function DataGridComponent() {
               orderBy: model[0].field,
               orderByDirection: model[0].sort,
             });
+          }}
+          onRowClick={(rowParams, event, details) => {
+            console.log("rowParams", rowParams);
+            navigate(`/${table_name}/${rowParams.id}`);
           }}
           rowCount={tableParams.total}
           onPageChange={(page, details) => {
