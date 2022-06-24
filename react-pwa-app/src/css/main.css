@@ -285,10 +285,10 @@ input {
   color: black;
 }
 .navbar__item__container .nav__item__active {
-  background-color: rgba(3, 131, 211, 0.13);
+  background-color: rgba(211, 3, 3, 0.13);
 }
 .navbar__item__container .nav__item__active .link__dark i {
-  color: #0182c7;
+  color: #c70101;
 }
 
 body {

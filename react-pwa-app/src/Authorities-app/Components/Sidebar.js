@@ -75,14 +75,20 @@ export default function Sidebar() {
         <div className="sidebar__link__collapse">
           <Collapse in={agentsOpen}>
             <div id="sidebar__agents__collapse">
-              <div className="sidebar__link d-flex align-items-center">
+              <Link
+                to={"create-agent"}
+                className="sidebar__link d-flex align-items-center"
+              >
                 <i className="bi bi-circle sidebar__link__icon__circle"></i>
                 <div>Create Agent</div>
-              </div>
-              <div className="sidebar__link d-flex align-items-center">
+              </Link>
+              <Link
+                to={"agent-list"}
+                className="sidebar__link d-flex align-items-center"
+              >
                 <i className="bi bi-circle sidebar__link__icon__circle"></i>
                 <div>All Agents</div>
-              </div>
+              </Link>
             </div>
           </Collapse>
         </div>
