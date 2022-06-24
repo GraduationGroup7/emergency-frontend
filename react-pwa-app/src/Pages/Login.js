@@ -44,7 +44,6 @@ function Login() {
         console.log("bind data ", data);
         let notification = new Notification("Message", {
           body: "this finally worked",
-          icon: "/Images/logo-svg.svg",
         });
       });
       navigate(`/${response.userData.type}/`);
