@@ -7,7 +7,7 @@ export default function useIsAuthenticated() {
   const authToken = localStorage.getItem("authToken");
   const location = useLocation();
   let path = location.pathname.split("/");
-  let appletName = path[1];
+  let appletName = path[2];
   console.log(path);
 
   console.log(appletName);
