@@ -14,13 +14,11 @@ import { BrowserRouter } from "react-router-dom";
 let persistor = persistStore(store);
 
 ReactDOM.render(
-  <BrowserRouter basename="/emergency-frontend">
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
 
   document.getElementById("root")
 );
