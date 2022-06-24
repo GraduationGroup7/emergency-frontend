@@ -20,12 +20,12 @@ self.__precacheManifest = [
     "url": "/emergency-frontend/static/js/runtime~main.ca353803.js"
   },
   {
-    "revision": "b57a58905370284f1499d1a35f5d2c96",
-    "url": "/emergency-frontend/static/media/bootstrap-icons.b57a5890.woff2"
-  },
-  {
     "revision": "a6a4862c8f0a585c6c1f6d5aa07b761c",
     "url": "/emergency-frontend/static/media/bootstrap-icons.a6a4862c.woff"
+  },
+  {
+    "revision": "b57a58905370284f1499d1a35f5d2c96",
+    "url": "/emergency-frontend/static/media/bootstrap-icons.b57a5890.woff2"
   },
   {
     "revision": "4251324c55806fcbd9febdc5eee16fd1",
