@@ -50,11 +50,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route
-            path="/emergency-frontend"
-            element={<MainWrapper></MainWrapper>}
-          >
+        <Routes basename="/emergency-frontend">
+          <Route path="/" element={<MainWrapper></MainWrapper>}>
             <Route index element={<Login />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="register" element={<Register></Register>}></Route>
