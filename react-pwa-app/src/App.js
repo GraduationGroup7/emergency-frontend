@@ -7,11 +7,7 @@ import Login from "./Pages/Login";
 import Page404 from "./Pages/Page404";
 import Pusher from "pusher-js";
 import config from "./API/config.json";
-import Authority from "./Components/Authority";
-import Agent from "./Components/Agent";
-import Emergency from "./Components/Emergency";
-import Customer from "./Components/Customer";
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
+// import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 // User App pages
 import Chat from "../src/User-app/Pages/Chat";
@@ -22,10 +18,10 @@ import SmsVerify from "./User-app/Pages/SmsVerify";
 import UserApp from "./User-app/UserApp";
 
 // Authorities App pages
-import NewReports from "./Authorities-app/Pages/NewReports";
 import CallHelp from "./User-app/Pages/CallHelp";
 import Chatroom from "./Pages/Chatroom";
 import MainWrapper from "./Pages/MainWrapper";
+import Dashboard from "./Authorities-app/Pages/Dashboard";
 
 // Agent App Pages
 import EmergencyAssignment from "./Agent-app/EmergencyAssignment";
@@ -46,14 +42,6 @@ const pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
   },
 });
 
-const beamsClient = new PusherPushNotifications.Client({
-  instanceId: "51968e33-90dc-4ded-aa46-5c803b1aa9f3",
-});
-
-beamsClient.start().then(() => {
-  console.log("I am connected and inside");
-});
-
 function App() {
   useEffect(() => {
     console.log("App rerendered");
@@ -64,21 +52,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainWrapper></MainWrapper>}>
-            <Route
-              path="/authoritys/:id"
-              element={<Authority></Authority>}
-            ></Route>
-            <Route path="/agents/:id" element={<Agent></Agent>}></Route>
-            <Route
-              path="/emergencies/:id"
-              element={<Emergency></Emergency>}
-            ></Route>
-            <Route
-              path="/customers/:id"
-              element={<Customer></Customer>}
-            ></Route>
             <Route index element={<Login />}></Route>
-            <Route path="user/register" element={<Register></Register>}></Route>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="register" element={<Register></Register>}></Route>
             <Route
               path="user/sms-verify/:request_id/:id"
               element={<SmsVerify></SmsVerify>}
@@ -109,7 +85,9 @@ function App() {
               ></Route>
               <Route path="*" element={<Page404></Page404>}></Route>
             </Route>
-            <Route path="authority" element={<AuthoritiesApp />} />
+            <Route path="authority" element={<AuthoritiesApp />}>
+              <Route index element={<Dashboard></Dashboard>}></Route>
+            </Route>
             <Route path="admin" element={<AdminApp />}>
               <Route
                 path="tables/:table_name"

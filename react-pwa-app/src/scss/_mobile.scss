@@ -1,0 +1,23 @@
+// This is for users and agents app
+.navbar__item__container{
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    justify-content: space-between;
+    padding: 4px 12px !important;
+    .nav__item{
+        padding: 8px 12px;
+        border-radius: 50%;
+        transition: all 0.5s;
+        .link__dark{
+            font-size: 1.25rem;
+            color: black;
+        }
+    }
+    .nav__item__active{
+        background-color: rgba(3, 131, 211, 0.13);
+        .link__dark i{
+            color: #0182c7;
+        }
+    }
+}

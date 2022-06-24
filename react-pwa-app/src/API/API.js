@@ -57,6 +57,11 @@ const get_user_info = async () => {
   return await request("get", "user");
 };
 
+// get the format for agents, emergencies, authorities, or customers (for the updateView.js)
+const get_form_format = async (path) => {
+  return await request("get", path);
+};
+
 // this gets the info for agents, emergencies, authorities, or customers (to be used by the custom components)
 const get_detailed_info = async (path) => {
   return await request("get", path);

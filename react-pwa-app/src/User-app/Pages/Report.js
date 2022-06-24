@@ -139,7 +139,11 @@ export default function Report() {
         <div className="main-content d-flex justify-content-center flex-column align-items-center m-auto">
           <h1>Emergency Assitance Needed?</h1>
           <h5>Press the button to report an emergency</h5>
-          <Button variant="primary" onClick={handleShow}>
+          <Button
+            variant="primary"
+            onClick={handleShow}
+            className="main-content__button"
+          >
             Report an Emergency
           </Button>
         </div>

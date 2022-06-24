@@ -4,7 +4,7 @@ import { get_table_data } from "../API/API";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function DataGridComponent() {
+export default function DataGridComponent({ route }) {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
@@ -28,7 +28,10 @@ export default function DataGridComponent() {
           page: page,
           ...sortModel,
         }).toString();
-        let res = await get_table_data(table_name, searchParams);
+        let res = await get_table_data(
+          route ? route : table_name,
+          searchParams
+        );
         setRows(res.data.data);
         console.log("NO of Rows " + res.data.data.length);
         setColumns(res.data.columns);
@@ -46,7 +49,7 @@ export default function DataGridComponent() {
 
   return (
     <>
-      <div style={{ height: "100%", width: "100%" }}>
+      <div className="w-100" style={{ height: "93%" }}>
         <DataGrid
           rows={rows}
           columns={columns}

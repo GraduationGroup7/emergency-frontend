@@ -143,6 +143,154 @@ input {
   text-decoration: none;
 }
 
+.authority__container {
+  display: grid;
+  grid-template-columns: 250px minmax(0, auto);
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
+  color: white;
+}
+.sidebar__container .sidebar__main__content {
+  flex: 1;
+  overflow-y: scroll;
+}
+.sidebar__container .sidebar__main__content .logo__container {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+.sidebar__container .sidebar__main__content .logo__container .logo__image {
+  width: 30px;
+  height: auto;
+  margin-right: 12px;
+}
+.sidebar__container .sidebar__main__content .logo__container .logo__text {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.sidebar__container .sidebar__main__content .username__container {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px;
+  transition: all 0.2s;
+  color: white;
+}
+.sidebar__container .sidebar__main__content .username__container .username__avatar {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+}
+.sidebar__container .sidebar__main__content .sidebar__link {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 12px;
+  transition: all 0.2s;
+  color: white;
+  text-decoration: none;
+}
+.sidebar__container .sidebar__main__content .sidebar__link .sidebar__link__icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+.sidebar__container .sidebar__main__content .sidebar__link .sidebar__link__icon__circle {
+  margin-right: 12px;
+  font-size: 14px;
+}
+.sidebar__container .sidebar__main__content .sidebar__link .side__link__arrow {
+  margin-left: auto;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.sidebar__container .sidebar__main__content .sidebar__link .side__link__arrow__open {
+  transform: rotateZ(90deg);
+}
+.sidebar__container .sidebar__main__content .sidebar__link__active, .sidebar__container .sidebar__main__content .sidebar__link__collapse__toggle__open {
+  background-color: rgb(146, 145, 145);
+}
+.sidebar__container .sidebar__main__content .sidebar__link__collapse {
+  padding-left: 2px;
+}
+.sidebar__container .sidebar__main__content .agents__collapse__container {
+  padding: 12px;
+}
+.sidebar__container .sidebar__main__content .sidebar__link:hover {
+  padding-left: 18px;
+}
+.sidebar__container .sidebar__main__content .page__section__container {
+  padding: 12px;
+}
+.sidebar__container .sidebar__main__content .page__section__container .page__section__title {
+  font-size: 14px;
+  opacity: 0.8;
+  font-weight: 600;
+}
+.sidebar__container .logout__area__container {
+  padding: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.sidebar__container .logout__area__container .logout__icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+.sidebar__container .logout__area__container:hover {
+  padding-left: 18px;
+}
+
+.dashboard__container {
+  padding: 12px;
+  overflow-y: scroll;
+}
+.dashboard__container .authority__card {
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  border-radius: 6px;
+  padding: 21px;
+}
+.dashboard__container .authority__card .search__area__container .table__search__button {
+  margin-left: 8px;
+}
+.dashboard__container .authority__card__title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.dashboard__container .card__height {
+  height: 100%;
+}
+
+.navbar__item__container {
+  display: flex;
+  flex-direction: row !important;
+  width: 100%;
+  justify-content: space-between;
+  padding: 4px 12px !important;
+}
+.navbar__item__container .nav__item {
+  padding: 8px 12px;
+  border-radius: 50%;
+  transition: all 0.5s;
+}
+.navbar__item__container .nav__item .link__dark {
+  font-size: 1.25rem;
+  color: black;
+}
+.navbar__item__container .nav__item__active {
+  background-color: rgba(3, 131, 211, 0.13);
+}
+.navbar__item__container .nav__item__active .link__dark i {
+  color: #0182c7;
+}
+
 body {
   background-color: #006699;
   height: 100vh;

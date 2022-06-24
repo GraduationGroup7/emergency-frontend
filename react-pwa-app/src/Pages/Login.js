@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../redux/userInfoSlice";
 import GeneralErrorAlert from "../Components/GeneralErrorAlert";
 import { updateError } from "../redux/errorInfoSlice";
+import config from "../API/config.json";
+import { pusher } from "../App";
 
 function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userInfo.value);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
@@ -32,7 +35,15 @@ function Login() {
 
       userInfoRequest = userInfoRequest.data;
       dispatch(updateUser(userInfoRequest.data));
+
+      const notification = pusher.subscribe(
+        `private-notification.${userInfo.id}`
+      );
+      notification.bind("notification", (data) => {
+        console.log("I am insideeeee");
+      });
       navigate(`/${response.userData.type}/`);
+
       console.log("Login was Successful");
     } catch (error) {
       console.log("unsuccesful Login Attempt ", error);
@@ -88,6 +99,22 @@ function Login() {
               type="submit"
             >
               Submit
+            </Button>
+            <Button
+              className="mb-2 submit__button"
+              variant="primary"
+              onClick={(e) => {
+                // you can check mdn notification documentation for implementation details
+                console.log(Notification.permission);
+
+                Notification.requestPermission();
+
+                if (Notification.permission === "granted") {
+                  console.log("notification access is granted");
+                }
+              }}
+            >
+              Get Notifications
             </Button>
           </Form>
           <Link to={"/user/register"} className="link__register">

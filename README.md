@@ -28,4 +28,14 @@
 2. https://pusher.com/docs/channels/
 3.
 
-you can see my frontend scratchpad here: https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzBkMTkxMWUxYWQwNzQ1MWNiYmFjNWFkZjViNDhkNDhlX0JCQTcxNzYyLTEyRTAtNDJFMS1CMzI0LTVCMTMxRjQyNEUzRF8wMTIwNDM0Ni02NDI3LTQxMWEtYWZkZS0zZTM1NzA4YWRlOTM=
+# Features to implement
+
+1. dynamic routing (all tabs, buttons, svg come from the server) (alan's idea)
+2. refactor SCSS
+3. design a better logout mechanism (what if user just accidently goes back to login)
+4. increase notification reliability especially on mobile devices
+5.
+
+# misc
+
+1. you can see my frontend scratchpad here: https://wbd.ms/share/v2/aHR0cHM6Ly93aGl0ZWJvYXJkLm1pY3Jvc29mdC5jb20vYXBpL3YxLjAvd2hpdGVib2FyZHMvcmVkZWVtLzBkMTkxMWUxYWQwNzQ1MWNiYmFjNWFkZjViNDhkNDhlX0JCQTcxNzYyLTEyRTAtNDJFMS1CMzI0LTVCMTMxRjQyNEUzRF8wMTIwNDM0Ni02NDI3LTQxMWEtYWZkZS0zZTM1NzA4YWRlOTM=
