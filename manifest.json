@@ -455,5 +455,5 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "scope": "/"
+  "scope": "/emergency-frontend/"
 }

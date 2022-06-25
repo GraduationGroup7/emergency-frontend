@@ -8,8 +8,8 @@
   "runtime~main.js": "/emergency-frontend/static/js/runtime~main.ca353803.js",
   "runtime~main.js.map": "/emergency-frontend/static/js/runtime~main.ca353803.js.map",
   "static/media/bootstrap-icons.css": "/emergency-frontend/static/media/bootstrap-icons.b57a5890.woff2",
-  "static/css/1.29696771.chunk.css.map": "/emergency-frontend/static/css/1.29696771.chunk.css.map",
   "static/css/main.76101d35.chunk.css.map": "/emergency-frontend/static/css/main.76101d35.chunk.css.map",
+  "static/css/1.29696771.chunk.css.map": "/emergency-frontend/static/css/1.29696771.chunk.css.map",
   "index.html": "/emergency-frontend/index.html",
   "precache-manifest.c4c29e2f3382246885e1c11dbf7afa2c.js": "/emergency-frontend/precache-manifest.c4c29e2f3382246885e1c11dbf7afa2c.js",
   "service-worker.js": "/emergency-frontend/service-worker.js"
