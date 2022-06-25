@@ -14,6 +14,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import successInfoSlice from "./successInfoSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const persistConfig = {
 const reducers = combineReducers({
   errorInfo: errorInfoSlice,
   userInfo: userInfoSlice,
+  successInfo: successInfoSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

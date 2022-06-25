@@ -3,8 +3,8 @@ import { Button, Form } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import { get_messages, send_chat_message } from "../API/API";
-import { pusher } from "../App";
 import { useSelector } from "react-redux";
+import { pusher } from "./Login";
 
 export default function Chatroom() {
   const [messages, setMessages] = useState([]);

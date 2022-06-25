@@ -2,16 +2,21 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { get_user_emergencies } from "../../API/API";
+import { useLocation, useNavigate } from "react-router-dom";
+import { get_chatrooms } from "../API/API";
 
 export default function Chat() {
   let navigate = useNavigate();
+  const location = useLocation();
+  let path = location.pathname.split("/");
+  let appletName = path[1];
   const [emergencies, setEmergencies] = useState([]);
   // @TODO: Refactor this
   useEffect(() => {
     (async () => {
-      let request = await get_user_emergencies();
+      let request = await get_chatrooms(
+        appletName === "user" ? "user/emergencies" : "agents/chat_rooms"
+      );
       setEmergencies(request.data.data);
       console.log(request.data.data);
     })();
@@ -24,7 +29,7 @@ export default function Chat() {
         border="dark"
         style={{ width: "18rem" }}
         onClick={(e) => {
-          navigate(`/user/chatroom/${emergency.chat_room_id}`);
+          navigate(`chatroom/${emergency.chat_room_id}`);
         }}
       >
         <Card.Header>Emergency Chat Room</Card.Header>

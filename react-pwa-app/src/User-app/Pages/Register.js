@@ -69,6 +69,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
+              required
               type="email"
               placeholder="Enter email"
               value={emailValue}
@@ -83,6 +84,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicFirstName">
             <Form.Label>First Name</Form.Label>
             <Form.Control
+              required
               type="text"
               placeholder="Enter First Name"
               value={firstNameValue}
@@ -94,6 +96,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicLastName">
             <Form.Label>Last Name</Form.Label>
             <Form.Control
+              required
               type="text"
               placeholder="Enter Last Name"
               value={lastNameValue}
@@ -103,6 +106,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
+              required
               type="number"
               placeholder="Enter Phone Number"
               value={phoneNumberValue}
@@ -113,6 +117,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
+              required
               type="password"
               placeholder="Password"
               value={passwordValue}
@@ -122,6 +127,7 @@ export default function Register() {
           <Form.Group className="mb-3" controlId="formBasicDoB">
             <Form.Label>Date of Birth</Form.Label>
             <Form.Control
+              required
               type="date"
               placeholder="Enter Date"
               value={dobValue}

@@ -3,7 +3,7 @@ import { Collapse, Badge } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({ tableName, setTableName }) {
   let navigate = useNavigate();
   const [routes, setRoutes] = useState([
     {
@@ -35,8 +35,11 @@ export default function Sidebar() {
           <div className="page__section__title">PAGES</div>
         </div>
         {routes.map((route, index) => (
-          <Link
-            to={route.path}
+          <div
+            onClick={() => {
+              setTableName("emergencies");
+              navigate("/authority");
+            }}
             className={
               (route.path === appletName ||
               (route.path === "" && appletName === "authority")
@@ -47,7 +50,7 @@ export default function Sidebar() {
           >
             <i className={route.icon + " sidebar__link__icon"}></i>
             <div>{`${route.name}`}</div>
-          </Link>
+          </div>
         ))}
         <div className="page__section__container">
           <div className="page__section__title">AGENT OPERATIONS</div>
@@ -76,19 +79,22 @@ export default function Sidebar() {
           <Collapse in={agentsOpen}>
             <div id="sidebar__agents__collapse">
               <Link
-                to={"create-agent"}
+                to={"form/agents/create_form"}
                 className="sidebar__link d-flex align-items-center"
               >
                 <i className="bi bi-circle sidebar__link__icon__circle"></i>
                 <div>Create Agent</div>
               </Link>
-              <Link
-                to={"agent-list"}
+              <div
+                onClick={() => {
+                  setTableName("agents");
+                  navigate("/authority");
+                }}
                 className="sidebar__link d-flex align-items-center"
               >
                 <i className="bi bi-circle sidebar__link__icon__circle"></i>
                 <div>All Agents</div>
-              </Link>
+              </div>
             </div>
           </Collapse>
         </div>

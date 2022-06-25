@@ -1,5 +1,12 @@
 # Emergency-Frontend
 
+# conventions followed
+
+1. controlled inputs in react
+2. BEM css convention
+3. REST API (restful)
+4. modular/reusable code
+
 # Technologies Used
 
 1. React and PWAs
@@ -21,12 +28,17 @@
 4. Infinite-scroll for chats
 5. Push notification and chat using web sockets
 6. easy logout just by rerouting to login
+7. PWA app that works cross-platform like an app
+8. request limit of 60 requests/min
 
 # References
 
 1. https://dev.to/dawnind/persist-redux-state-with-redux-persist-3k0d
 2. https://pusher.com/docs/channels/
-3.
+3. mdn docs
+4. React docs
+5. redux docs
+6.
 
 # Features to implement
 
@@ -34,7 +46,12 @@
 2. refactor SCSS
 3. design a better logout mechanism (what if user just accidently goes back to login)
 4. increase notification reliability especially on mobile devices
-5.
+5. dynamic forms (have user registration fields come from server rather than statically typed)
+
+# testing
+
+1. Postman
+2.
 
 # misc
 

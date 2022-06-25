@@ -104,26 +104,94 @@
     }
 }
 
+.authority__card {
+    box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+    border-radius: 6px;
+    padding: 21px;
+
+    .search__area__container {
+        .table__search__button{
+            margin-left: 8px;
+        }
+    }
+}
+.authority__card__title{
+    font-size: 20px;
+    font-weight: 500;
+}
+.card__height{
+    height: 100%;
+}
+
 .dashboard__container{
     padding: 12px;
     overflow-y: scroll;
+}
+.create__agent__container{
+    padding: 12px;
+    overflow-y: scroll;
 
-    .authority__card {
-        box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-        border-radius: 6px;
-        padding: 21px;
-
-        .search__area__container {
-            .table__search__button{
-                margin-left: 8px;
-            }
-        }
+}
+.agent__list__container{
+    padding: 12px;
+    overflow-y: scroll;
+}
+.modal__header__class {
+    padding: 12px 16px !important;
+    background-color: #0000000a !important;
+    Button {
+       font-size: 12px !important;
     }
-    .authority__card__title{
-        font-size: 20px;
+}
+.modal__title__class{
+    font-size: 1rem !important;
+}
+.assigned__agents__table {
+    width: 100%;
+    th {
+        background-color: #f3f2f7;
+        padding: 10px 16px;
         font-weight: 600;
     }
-    .card__height{
-        height: 100%;
+    td {
+        padding: 10px 16px !important;
+        border-top: 1px solid #ebe9f1 !important;
+    }
+    tr:nth-of-type(odd){
+        background-color: #fafafc !important;
+    }
+}
+.authority__form__container{
+    padding: 16px;
+    overflow-y: scroll;
+    .emergency__detail__label {
+        font-weight: 500;
+        color: rgb(58, 58, 58);
+        margin-bottom: 4px;
+    }
+    .emergency__detail__info {
+        margin-bottom: 4px;
+    }
+    .emergency__detail__button{
+        margin-right: 8px;
+        font-weight: 600;
+    }
+    .emergency__detail__select{
+        padding: 4px;
+        border: none;
+        box-shadow: none !important;
+    }
+}
+.upload__evidence__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 4px dashed #dee2e6;
+    background-color: #e9eef2;
+    border-radius: 20px;
+    i {
+        font-size: 7rem;
+        line-height: 9rem;
     }
 }

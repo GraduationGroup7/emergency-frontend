@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import MyModal from "../../Components/MyModal";
+import { useDispatch } from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
@@ -17,20 +15,18 @@ import {
   InputGroup,
   Alert,
 } from "react-bootstrap";
-import { create_emergency } from "../../API/API";
+import { create_emergency, get_emergency_types } from "../../API/API";
 import { Link, useNavigate } from "react-router-dom";
-
-const emergency_types = ["Fire", "Medical", "Crime", "Accidents", "Other"];
+import { toggle } from "../../redux/successInfoSlice";
+import { updateError } from "../../redux/errorInfoSlice";
 
 const axios = require("axios").default;
 export default function Report() {
   const [canvasShow, setCanvasShow] = useState(false);
-  const [nameInput, setNameInput] = useState("");
-  const [modalShow, setModalShow] = useState(false);
   const [files, setFiles] = useState([]);
   const [emergencyDescription, SetEmergencyDescription] = useState("");
   const [emergencyType, setEmergencyType] = useState(0);
-  const [reportError, setReportError] = useState("");
+  const [emergencyTypes, setEmergencyTypes] = useState([]);
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
     lng: null,
@@ -38,6 +34,8 @@ export default function Report() {
 
   const handleClose = () => setCanvasShow(false);
   const handleShow = () => setCanvasShow(true);
+
+  const dispatch = useDispatch();
 
   // detials found here: https://www.pluralsight.com/guides/how-to-use-geolocation-call-in-reactjs
   function findCurrentLocation() {
@@ -51,7 +49,12 @@ export default function Report() {
         setCoordinates(newPosition);
       },
       function(error) {
-        setReportError(error.message);
+        dispatch(
+          updateError({
+            techError: error.message,
+            descriptiveError: error.response.data.data,
+          })
+        );
       }
     );
   }
@@ -59,6 +62,19 @@ export default function Report() {
   useEffect(() => {
     console.log(files);
   }, [files]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let emergency_types = await get_emergency_types();
+        setEmergencyTypes(emergency_types.data.data);
+        setEmergencyType(emergency_types.data.data[0].id);
+        console.log(emergencyTypes);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const { register, handleSubmit } = useForm();
 
@@ -90,7 +106,7 @@ export default function Report() {
     */
     console.log(e);
 
-    findCurrentLocation();
+    // findCurrentLocation();
 
     let time = new Date();
 
@@ -102,6 +118,8 @@ export default function Report() {
     const info = {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
+      latitude: 1,
+      longitude: 2,
       description: emergencyDescription,
       time: time.getTime(),
       emergency_type_id: emergencyType,
@@ -113,29 +131,22 @@ export default function Report() {
     try {
       await create_emergency(formData);
       // emergency created successfully
-      setModalShow(true);
       setCanvasShow(false);
     } catch (error) {
       //error occured
       console.log(error);
       setCanvasShow(false);
-      setReportError(error.message);
+      dispatch(
+        updateError({
+          techError: error.message,
+          descriptiveError: error.response.data.data,
+        })
+      );
     }
   };
   return (
     <>
       <>
-        {/* alert to prompt the user to try posting the emergency again */}
-        {reportError && (
-          <Alert
-            variant="danger"
-            onClose={() => setReportError("")}
-            dismissible
-          >
-            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-            <p>detailed error is: {reportError}</p>
-          </Alert>
-        )}
         <div className="main-content d-flex justify-content-center flex-column align-items-center m-auto">
           <h1>Emergency Assitance Needed?</h1>
           <h5>Press the button to report an emergency</h5>
@@ -147,9 +158,6 @@ export default function Report() {
             Report an Emergency
           </Button>
         </div>
-
-        {/* modal to show that you have reported successfully */}
-        <MyModal show={modalShow} onHide={() => setModalShow(false)} />
 
         {/* offcanvas conatianing the form to submit the emergency */}
         {/* made off canvas bigger i.e. fit the content by adding "h-auto"  */}
@@ -168,13 +176,14 @@ export default function Report() {
               <Form.Group className="mb-3">
                 <Form.Select
                   aria-label="Default select example"
+                  disabled={emergencyTypes.length <= 0}
                   value={emergencyType}
                   onChange={(e) => setEmergencyType(e.target.value)}
                 >
-                  {emergency_types.map((elem, index) => {
+                  {emergencyTypes.map((elem) => {
                     return (
-                      <option key={nanoid()} value={index}>
-                        {elem}
+                      <option key={nanoid()} value={elem.id}>
+                        {elem.name}
                       </option>
                     );
                   })}

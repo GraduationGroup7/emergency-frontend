@@ -8,6 +8,8 @@ export default function useIsAuthenticated() {
   const location = useLocation();
   let path = location.pathname.split("/");
   let appletName = path[1];
+  let formType = path[2];
+
   console.log(path);
   console.log("applet name: ", appletName);
 
@@ -20,6 +22,13 @@ export default function useIsAuthenticated() {
   ) {
     console.log("pages that dont require authentication");
     return true;
+  }
+
+  // check authorization for forms
+  if (formType === "agents" || formType === "emergencies") {
+    return userInfo.type === "authority" || userInfo.type === "admin";
+  } else if (formType === "authorities" || formType === "customers") {
+    return userInfo.type === "admin";
   }
 
   if (!authToken) {

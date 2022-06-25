@@ -5,12 +5,9 @@ import AgentApp from "./Agent-app/AgentApp";
 import AuthoritiesApp from "./Authorities-app/AuthoritiesApp";
 import Login from "./Pages/Login";
 import Page404 from "./Pages/Page404";
-import Pusher from "pusher-js";
-import config from "./API/config.json";
-// import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 // User App pages
-import Chat from "../src/User-app/Pages/Chat";
+import Chat from "./Pages/Chat";
 import Profile from "./User-app/Pages/Profile";
 import Register from "./User-app/Pages/Register";
 import Report from "./User-app/Pages/Report";
@@ -22,25 +19,14 @@ import CallHelp from "./User-app/Pages/CallHelp";
 import Chatroom from "./Pages/Chatroom";
 import MainWrapper from "./Pages/MainWrapper";
 import Dashboard from "./Authorities-app/Pages/Dashboard";
+import AuthorityForm from "./Authorities-app/Pages/AuthorityForm";
 
 // Agent App Pages
 import EmergencyAssignment from "./Agent-app/EmergencyAssignment";
 
 // Admin App Pages
-import DataGridComponent from "./Components/DataGridComponent";
-
-const pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
-  cluster: "eu",
-  encrypted: true,
-  authEndpoint: `${config.api}/pusher/auth`,
-  auth: {
-    headers: {
-      Authorization: localStorage.getItem("authToken")
-        ? "Bearer " + localStorage.getItem("authToken")
-        : "",
-    },
-  },
-});
+import AdminDashboard from "./Admin-app/pages/AdminDashboard";
+import AdminForm from "./Admin-app/pages/AdminForm";
 
 function App() {
   useEffect(() => {
@@ -65,12 +51,11 @@ function App() {
               <Route path="call-help" element={<CallHelp />}></Route>
               <Route path="chat" element={<Chat></Chat>}></Route>
               <Route
-                path="chatroom/:chatroom_id"
+                path="chat/chatroom/:chatroom_id"
                 element={<Chatroom></Chatroom>}
               ></Route>
               <Route path="*" element={<Page404></Page404>}></Route>
             </Route>
-
             <Route path="agent" element={<AgentApp />}>
               <Route
                 index
@@ -80,18 +65,24 @@ function App() {
               <Route path="report" element={<Report />}></Route>
               <Route path="chat" element={<Chat></Chat>}></Route>
               <Route
-                path="chatroom/:chatroom_id"
+                path="chat/chatroom/:chatroom_id"
                 element={<Chatroom></Chatroom>}
               ></Route>
               <Route path="*" element={<Page404></Page404>}></Route>
             </Route>
             <Route path="authority" element={<AuthoritiesApp />}>
               <Route index element={<Dashboard></Dashboard>}></Route>
+              {/* if id is "create" is will fetch the create form request otherwise, update the user with that id */}
+              <Route
+                path="form/:formType/:id"
+                element={<AuthorityForm></AuthorityForm>}
+              ></Route>
             </Route>
             <Route path="admin" element={<AdminApp />}>
+              <Route index element={<AdminDashboard></AdminDashboard>}></Route>
               <Route
-                path="tables/:table_name"
-                element={<DataGridComponent></DataGridComponent>}
+                path="form/:formType/:id"
+                element={<AdminForm></AdminForm>}
               ></Route>
             </Route>
             <Route path="*" element={<Page404></Page404>}></Route>
@@ -103,5 +94,3 @@ function App() {
 }
 
 export default App;
-
-export { pusher };

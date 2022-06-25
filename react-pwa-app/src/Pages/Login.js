@@ -3,11 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../redux/userInfoSlice";
+import { replaceUser, updateUser } from "../redux/userInfoSlice";
 import GeneralErrorAlert from "../Components/GeneralErrorAlert";
 import { updateError } from "../redux/errorInfoSlice";
-import config from "../API/config.json";
-import { pusher } from "../App";
+import config from "../API/config";
+import Pusher from "pusher-js";
+import { toggle } from "../redux/successInfoSlice";
+
+let pusher;
 
 function Login() {
   let navigate = useNavigate();
@@ -19,6 +22,7 @@ function Login() {
   useEffect(() => {
     // this way any component can just reroute to login to "logout"
     localStorage.removeItem("authToken");
+    dispatch(replaceUser({}));
   }, []);
 
   const onSubmit = async (e) => {
@@ -32,22 +36,33 @@ function Login() {
       console.log("this is the response: ", response);
       localStorage.setItem("authToken", response.accessToken);
       let userInfoRequest = await get_user_info();
-
       userInfoRequest = userInfoRequest.data;
       dispatch(updateUser(userInfoRequest.data));
 
+      pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
+        cluster: "eu",
+        encrypted: true,
+        authEndpoint: `${config.api}/pusher/auth`,
+        auth: {
+          headers: {
+            Authorization: localStorage.getItem("authToken")
+              ? "Bearer " + localStorage.getItem("authToken")
+              : "",
+          },
+        },
+      });
+
       const notification = pusher.subscribe(
-        `private-notification.${userInfo.id}`
+        `private-notification.${userInfoRequest.data.id}`
       );
       notification.bind("notification", (data) => {
         console.log("I am insideeeee");
         console.log("bind data ", data);
-        let notification = new Notification("Message", {
-          body: "this finally worked",
+        let notification = new Notification(data.details.title, {
+          body: data.details.payload.message,
         });
       });
       navigate(`/${response.userData.type}/`);
-
       console.log("Login was Successful");
     } catch (error) {
       console.log("unsuccesful Login Attempt ", error);
@@ -131,3 +146,5 @@ function Login() {
 }
 
 export default Login;
+
+export { pusher };

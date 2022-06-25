@@ -248,24 +248,101 @@ input {
   padding-left: 18px;
 }
 
-.dashboard__container {
-  padding: 12px;
-  overflow-y: scroll;
-}
-.dashboard__container .authority__card {
+.authority__card {
   box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
   border-radius: 6px;
   padding: 21px;
 }
-.dashboard__container .authority__card .search__area__container .table__search__button {
+.authority__card .search__area__container .table__search__button {
   margin-left: 8px;
 }
-.dashboard__container .authority__card__title {
+
+.authority__card__title {
   font-size: 20px;
+  font-weight: 500;
+}
+
+.card__height {
+  height: 100%;
+}
+
+.dashboard__container {
+  padding: 12px;
+  overflow-y: scroll;
+}
+
+.create__agent__container {
+  padding: 12px;
+  overflow-y: scroll;
+}
+
+.agent__list__container {
+  padding: 12px;
+  overflow-y: scroll;
+}
+
+.modal__header__class {
+  padding: 12px 16px !important;
+  background-color: rgba(0, 0, 0, 0.0392156863) !important;
+}
+.modal__header__class Button {
+  font-size: 12px !important;
+}
+
+.modal__title__class {
+  font-size: 1rem !important;
+}
+
+.assigned__agents__table {
+  width: 100%;
+}
+.assigned__agents__table th {
+  background-color: #f3f2f7;
+  padding: 10px 16px;
   font-weight: 600;
 }
-.dashboard__container .card__height {
-  height: 100%;
+.assigned__agents__table td {
+  padding: 10px 16px !important;
+  border-top: 1px solid #ebe9f1 !important;
+}
+.assigned__agents__table tr:nth-of-type(odd) {
+  background-color: #fafafc !important;
+}
+
+.authority__form__container {
+  padding: 16px;
+  overflow-y: scroll;
+}
+.authority__form__container .emergency__detail__label {
+  font-weight: 500;
+  color: rgb(58, 58, 58);
+  margin-bottom: 4px;
+}
+.authority__form__container .emergency__detail__info {
+  margin-bottom: 4px;
+}
+.authority__form__container .emergency__detail__button {
+  margin-right: 8px;
+  font-weight: 600;
+}
+.authority__form__container .emergency__detail__select {
+  padding: 4px;
+  border: none;
+  box-shadow: none !important;
+}
+
+.upload__evidence__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 4px dashed #dee2e6;
+  background-color: #e9eef2;
+  border-radius: 20px;
+}
+.upload__evidence__body i {
+  font-size: 7rem;
+  line-height: 9rem;
 }
 
 .navbar__item__container {

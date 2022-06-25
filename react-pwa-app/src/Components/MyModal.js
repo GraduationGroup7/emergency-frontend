@@ -1,10 +1,15 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { toggle } from "../redux/successInfoSlice";
 
-export default function MyModal(props) {
+export default function MyModal() {
+  const dispatch = useDispatch();
+  const successInfo = useSelector((state) => state.successInfo.value);
+
   return (
     <Modal
-      {...props}
+      show={successInfo}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -23,7 +28,7 @@ export default function MyModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={() => dispatch(toggle())}>Close</Button>
       </Modal.Footer>
     </Modal>
   );

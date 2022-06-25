@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { get_table_data } from "../API/API";
+import { bulk_delete, get_table_data } from "../API/API";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateError } from "../redux/errorInfoSlice";
+import { Button } from "react-bootstrap";
+import { toggle } from "../redux/successInfoSlice";
 
-export default function DataGridComponent({ route }) {
+export default function DataGridComponent({ table_name }) {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
   const [sortModel, setSortModel] = useState({});
+  const [selectedRows, setSelectedRows] = useState([]);
   const [tableParams, setTableParams] = useState({
     page: page,
     total: 0,
   });
 
+  const dispatch = useDispatch();
   let navigate = useNavigate();
-  let { table_name } = useParams();
-  console.log(table_name);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,10 +33,7 @@ export default function DataGridComponent({ route }) {
           page: page,
           ...sortModel,
         }).toString();
-        let res = await get_table_data(
-          route ? route : table_name,
-          searchParams
-        );
+        let res = await get_table_data(table_name, searchParams);
         setRows(res.data.data);
         console.log("NO of Rows " + res.data.data.length);
         setColumns(res.data.columns);
@@ -43,10 +44,34 @@ export default function DataGridComponent({ route }) {
         });
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
+        console.log("unsuccesful table fetch attempt ", error);
+        dispatch(
+          updateError({
+            techError: error.message,
+          })
+        );
       }
     })();
-  }, [page, sortModel, table_name]);
+  }, [page, sortModel, table_name, tableParams.total]);
+
+  async function handleDelete() {
+    try {
+      bulk_delete(`${table_name}/bulk_delete`, { ids: selectedRows });
+      dispatch(toggle());
+      setTableParams((prevValue) => ({
+        ...prevValue,
+        total: prevValue.total - selectedRows.length,
+      }));
+    } catch (error) {
+      console.log("unsuccesful delete Attempt ", error);
+      dispatch(
+        updateError({
+          techError: error.message,
+          descriptiveError: error.response.data.data,
+        })
+      );
+    }
+  }
 
   // to fix the row count issue, look here: https://mui.com/x/react-data-grid/pagination/#basic-implementation
   const [rowCountState, setRowCountState] = useState(tableParams.total);
@@ -58,6 +83,7 @@ export default function DataGridComponent({ route }) {
 
   return (
     <>
+      <Button onClick={handleDelete}>Delete</Button>
       <div className="w-100" style={{ height: "93%" }}>
         <DataGrid
           rows={rows}
@@ -76,13 +102,18 @@ export default function DataGridComponent({ route }) {
               orderByDirection: model[0].sort,
             });
           }}
-          onRowClick={(rowParams, event, details) => {
-            console.log("rowParams", rowParams);
-            navigate(`/${table_name}/${rowParams.id}`);
+          onRowClick={(event, details) => {
+            console.log("row clicked", table_name);
+            console.log("row clicked", event);
+            navigate(`form/${table_name}/${event.id}`);
           }}
           rowCount={rowCountState}
           onPageChange={(page, details) => {
             setPage(page + 1);
+          }}
+          onSelectionModelChange={(selectionMode) => {
+            console.log("rows selected: ", selectionMode);
+            setSelectedRows(selectionMode);
           }}
         />
       </div>
