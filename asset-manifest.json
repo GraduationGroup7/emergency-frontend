@@ -1,16 +1,16 @@
 {
   "main.css": "/emergency-frontend/static/css/main.76101d35.chunk.css",
-  "main.js": "/emergency-frontend/static/js/main.bb860cc6.chunk.js",
-  "main.js.map": "/emergency-frontend/static/js/main.bb860cc6.chunk.js.map",
+  "main.js": "/emergency-frontend/static/js/main.577a2984.chunk.js",
+  "main.js.map": "/emergency-frontend/static/js/main.577a2984.chunk.js.map",
   "static/css/1.29696771.chunk.css": "/emergency-frontend/static/css/1.29696771.chunk.css",
   "static/js/1.c89d2994.chunk.js": "/emergency-frontend/static/js/1.c89d2994.chunk.js",
   "static/js/1.c89d2994.chunk.js.map": "/emergency-frontend/static/js/1.c89d2994.chunk.js.map",
   "runtime~main.js": "/emergency-frontend/static/js/runtime~main.ca353803.js",
   "runtime~main.js.map": "/emergency-frontend/static/js/runtime~main.ca353803.js.map",
-  "static/media/bootstrap-icons.css": "/emergency-frontend/static/media/bootstrap-icons.a6a4862c.woff",
-  "static/css/main.76101d35.chunk.css.map": "/emergency-frontend/static/css/main.76101d35.chunk.css.map",
+  "static/media/bootstrap-icons.css": "/emergency-frontend/static/media/bootstrap-icons.b57a5890.woff2",
   "static/css/1.29696771.chunk.css.map": "/emergency-frontend/static/css/1.29696771.chunk.css.map",
+  "static/css/main.76101d35.chunk.css.map": "/emergency-frontend/static/css/main.76101d35.chunk.css.map",
   "index.html": "/emergency-frontend/index.html",
-  "precache-manifest.3c8cfbcbcb874c5960fc6890da2f09c5.js": "/emergency-frontend/precache-manifest.3c8cfbcbcb874c5960fc6890da2f09c5.js",
+  "precache-manifest.c4c29e2f3382246885e1c11dbf7afa2c.js": "/emergency-frontend/precache-manifest.c4c29e2f3382246885e1c11dbf7afa2c.js",
   "service-worker.js": "/emergency-frontend/service-worker.js"
 }
