@@ -11,6 +11,7 @@ export default function DataGridComponent({ route }) {
   const [sortModel, setSortModel] = useState({});
   const [tableParams, setTableParams] = useState({
     page: page,
+    total: 0,
   });
 
   let navigate = useNavigate();
@@ -47,6 +48,14 @@ export default function DataGridComponent({ route }) {
     })();
   }, [page, sortModel, table_name]);
 
+  // to fix the row count issue, look here: https://mui.com/x/react-data-grid/pagination/#basic-implementation
+  const [rowCountState, setRowCountState] = useState(tableParams.total);
+  React.useEffect(() => {
+    setRowCountState((prevRowCountState) =>
+      tableParams.total !== undefined ? tableParams.total : prevRowCountState
+    );
+  }, [tableParams.total, setRowCountState]);
+
   return (
     <>
       <div className="w-100" style={{ height: "93%" }}>
@@ -71,7 +80,7 @@ export default function DataGridComponent({ route }) {
             console.log("rowParams", rowParams);
             navigate(`/${table_name}/${rowParams.id}`);
           }}
-          rowCount={tableParams.total}
+          rowCount={rowCountState}
           onPageChange={(page, details) => {
             setPage(page + 1);
           }}

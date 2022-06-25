@@ -121,7 +121,7 @@ function Login() {
               Get Notifications
             </Button>
           </Form>
-          <Link to={"/user/register"} className="link__register">
+          <Link to={"register"} className="link__register">
             <p>Register a New User</p>
           </Link>
         </div>
