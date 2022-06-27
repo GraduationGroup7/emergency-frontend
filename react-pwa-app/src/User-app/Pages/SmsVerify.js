@@ -36,9 +36,7 @@ export default function SmsVerify() {
     <div className="general__mobile__container">
       <div className="text-center">
         <h1 className="general__mobile__title">Verify Phone</h1>
-        <p className="general__mobile__subtitle">
-          Verification code sent to 90533 860 1322
-        </p>
+        <p className="general__mobile__subtitle">Verification code was sent</p>
       </div>
       <Form onSubmit={onSubmit}>
         <Form.Group

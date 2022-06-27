@@ -17,6 +17,7 @@ export default function DataGridComponent({
   selectedRows,
   setSelectedRows,
   emergencyId,
+  disableOnRowSelect,
 }) {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -119,13 +120,17 @@ export default function DataGridComponent({
             });
           }}
           onRowClick={(event, details) => {
-            console.log("row clicked", table_name);
-            console.log("row clicked", event);
-            navigate(
-              `form/${
-                table_name === "available-agents" ? "agents" : table_name
-              }/${event.id}`
-            );
+            if (!disableOnRowSelect) {
+              console.log("row clicked", table_name);
+              console.log("row clicked", event);
+              navigate(
+                `form/${
+                  table_name === "available-agents" ? "agents" : table_name
+                }/${event.id}`
+              );
+            } else {
+              console.log("rows have been clicked");
+            }
           }}
           rowCount={rowCountState}
           onPageChange={(page, details) => {

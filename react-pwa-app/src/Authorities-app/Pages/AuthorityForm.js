@@ -9,6 +9,7 @@ import {
   merge_emergencies,
   set_emergency_note,
   get_emergency_note,
+  get_backup_file,
 } from "../../API/API";
 import {
   Row,
@@ -28,6 +29,7 @@ import { nanoid } from "nanoid";
 import { useDispatch } from "react-redux";
 import { updateError } from "../../redux/errorInfoSlice";
 import { toggle } from "../../redux/successInfoSlice";
+import axios from "axios";
 
 export default function AuthorityForm() {
   const dispatch = useDispatch();
@@ -64,7 +66,6 @@ export default function AuthorityForm() {
   const [showMerging, setShowMerging] = useState(false);
 
   const handleClose = () => setShow(false);
-
   const handleShow = () => {
     setShow(true);
   };
@@ -112,10 +113,6 @@ export default function AuthorityForm() {
     }
   };
 
-  const [showEvidence, setShowEvidence] = useState(false);
-
-  const handleCloseEvidence = () => setShowEvidence(false);
-  const handleShowEvidence = () => setShowEvidence(true);
   const handleCloseMerging = () => setShowMerging(false);
   const handleShowMerging = () => setShowMerging(true);
 
@@ -130,6 +127,25 @@ export default function AuthorityForm() {
       dispatch(updateError(error.message));
     }
   };
+  async function displayFile(e) {
+    axios({
+      url: `${process.env.REACT_APP_API_URL}/${e.s3_url}`, //your url
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("authToken")
+          ? "Bearer " + localStorage.getItem("authToken")
+          : "",
+      },
+      responseType: "blob", // important
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", e.name); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    });
+  }
   return (
     <div className="authority__form__container">
       {/* #TODO: psudo routing here, so refactor this */}
@@ -243,11 +259,13 @@ export default function AuthorityForm() {
                 selectedRows={selectedRows}
                 setSelectedRows={setSelectedRows}
                 emergencyId={id}
+                disableOnRowSelect={true}
               ></DataGridComponent>
             </Modal.Body>
             <Modal.Footer>
               <Button
                 variant="primary"
+                // merge button
                 onClick={() => {
                   try {
                     // console.log("slice res", selectedRows.slice(1));
@@ -260,40 +278,6 @@ export default function AuthorityForm() {
                   }
                 }}
               >
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-
-          {/* Adding Evidences */}
-          <Modal
-            size="lg"
-            centered
-            dialogClassName="ultra__wide__modal"
-            show={showEvidence}
-            onHide={handleCloseEvidence}
-          >
-            <Modal.Header className="modal__header__class" closeButton>
-              <Modal.Title className="modal__title__class">
-                Add Evidence
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Row>
-                <Col md={8}>
-                  <div className="upload__evidence__body">
-                    <i className="bi bi-cloud-upload-fill fa-lg"></i>
-                    <div className="mb-3">Drop Files Here or</div>
-                    <Button>Click Here</Button>
-                  </div>
-                </Col>
-                <Col md={4}>
-                  <div>Uploaded Files</div>
-                </Col>
-              </Row>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handleCloseEvidence}>
                 Save Changes
               </Button>
             </Modal.Footer>
@@ -503,7 +487,12 @@ export default function AuthorityForm() {
                   </tr>
                   <tbody>
                     {evidenceFiles.map((e) => (
-                      <tr key={e.id}>
+                      <tr
+                        key={e.id}
+                        onClick={() => {
+                          displayFile(e);
+                        }}
+                      >
                         <td>{e.id}</td>
                         <td>{e.name}</td>
                         <td>{e.type}</td>

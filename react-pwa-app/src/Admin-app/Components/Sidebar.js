@@ -28,7 +28,7 @@ export default function Sidebar({ tableName, setTableName }) {
     <div className="sidebar__container">
       <div className="sidebar__main__content">
         <div className="logo__container">
-          <img className="logo__image" src="/Images/logo-svg.svg" alt="" />
+          <img className="logo__image" src="./Images/logo-svg.svg" alt="" />
           <div className="logo__text">YARDIM</div>
         </div>
         <div className="username__container d-flex align-items-center">

@@ -106,7 +106,7 @@ export default function Report() {
     */
     console.log(e);
 
-    // findCurrentLocation();
+    findCurrentLocation();
 
     let time = new Date();
 
@@ -118,8 +118,6 @@ export default function Report() {
     const info = {
       latitude: coordinates.lat,
       longitude: coordinates.lng,
-      latitude: 1,
-      longitude: 2,
       description: emergencyDescription,
       time: time.getTime(),
       emergency_type_id: emergencyType,
