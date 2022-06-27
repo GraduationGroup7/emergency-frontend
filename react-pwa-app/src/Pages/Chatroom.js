@@ -31,14 +31,14 @@ export default function Chatroom({ chatRoomType }) {
         const channel = pusher.subscribe(`private-agent-chat.${chatroom_id}`);
         channel.bind("message", (data) => {
           console.log("I got called");
-          appendMsg(data.user.name, data.chatMessage.message, data.user.name);
+          appendMsg(data.user.id, data.chatMessage.message, data.user.name);
         });
       } else {
         // normal agent-customer chat
         const channel = pusher.subscribe(`private-chat.${chatroom_id}`);
         channel.bind("message", (data) => {
           console.log("I got called");
-          appendMsg(data.user.id, data.chatMessage.message);
+          appendMsg(data.user.id, data.chatMessage.message, data.user.name);
         });
       }
       console.log(pusher);

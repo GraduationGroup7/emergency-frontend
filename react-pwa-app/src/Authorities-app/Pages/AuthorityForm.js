@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UpdateView from "../../Components/UpdateView";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   get_emergency_details,
   get_available_agents,
@@ -32,6 +32,7 @@ import { toggle } from "../../redux/successInfoSlice";
 import axios from "axios";
 
 export default function AuthorityForm() {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   let { formType, id } = useParams();
   const [emergencyDetails, changeEmergencyDetails] = useState();
@@ -145,6 +146,18 @@ export default function AuthorityForm() {
       document.body.appendChild(link);
       link.click();
     });
+  }
+
+  async function mergeEmergencies() {
+    try {
+      // console.log("slice res", selectedRows.slice(1));
+      let res = await merge_emergencies(id, selectedRows);
+      handleCloseMerging();
+      navigate(`/authority/form/emergencies/${res.data.data.id}`);
+    } catch (error) {
+      console.log(error);
+      dispatch(updateError(error.message));
+    }
   }
   return (
     <div className="authority__form__container">
@@ -267,15 +280,7 @@ export default function AuthorityForm() {
                 variant="primary"
                 // merge button
                 onClick={() => {
-                  try {
-                    // console.log("slice res", selectedRows.slice(1));
-                    merge_emergencies(id, selectedRows);
-                    handleCloseMerging();
-                    dispatch(toggle());
-                  } catch (error) {
-                    console.log(error);
-                    dispatch(updateError(error.message));
-                  }
+                  mergeEmergencies();
                 }}
               >
                 Save Changes
