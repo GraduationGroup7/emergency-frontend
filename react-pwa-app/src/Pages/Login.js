@@ -79,11 +79,7 @@ function Login() {
   return (
     <div className="login__parent__container">
       <div className="login__container">
-        <img
-          src="emergency-frontend/Images/logo-svg.svg"
-          alt=""
-          className="logo"
-        />
+        <img src="./Images/logo-svg.svg" alt="" className="logo" />
         <div className="login__form__container">
           <div className="main__header">
             <h1 className="main__header__title">Login</h1>

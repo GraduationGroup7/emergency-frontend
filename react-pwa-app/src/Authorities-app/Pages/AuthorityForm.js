@@ -105,8 +105,10 @@ export default function AuthorityForm() {
         emergencyFormDetails
       );
       console.log(res);
+      dispatch(toggle());
     } catch (e) {
       console.log(e);
+      dispatch(updateError(error.message));
     }
   };
 
