@@ -18,7 +18,7 @@
 7. PHP/laravel
 8. Pusher
 9. Vonage SMS API
-10.
+10. react-toastify
 
 # Cool features
 
@@ -30,6 +30,7 @@
 6. easy logout just by rerouting to login
 7. PWA app that works cross-platform like an app
 8. request limit of 60 requests/min
+9. react-toastify
 
 # References
 
@@ -43,15 +44,19 @@
 # Features to implement
 
 1. dynamic routing (all tabs, buttons, svg come from the server) (alan's idea)
-2. refactor SCSS
+2. refactor SCSS (refine design to follow conventions and standards)
 3. design a better logout mechanism (what if user just accidently goes back to login)
 4. increase notification reliability especially on mobile devices
 5. dynamic forms (have user registration fields come from server rather than statically typed)
+6. implement useCallback when fetching (or any side effect) on a button click or any event
+7. implement dataGrid filtering
+8. implement offline notification for phones (background process)
 
 # testing
 
 1. Postman
-2.
+2. try overwhelming all tables with entries to see scroll behaviour
+3.
 
 # misc
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import GeneralErrorAlert from "../Components/GeneralErrorAlert";
-import MyModal from "../Components/MyModal";
+import GeneralFeedbackToast from "../Components/GeneralFeedbackToast";
 import useIsAuthenticated from "../Util/useIsAuthenticated";
 import NoPermission from "./NoPermission";
 
@@ -13,10 +12,9 @@ export default function MainWrapper() {
   }, [isAuthenticated]);
   return (
     <>
+      <GeneralFeedbackToast></GeneralFeedbackToast>
       {authToken ? (
         <>
-          <GeneralErrorAlert></GeneralErrorAlert>
-          <MyModal></MyModal>
           <Outlet></Outlet>
         </>
       ) : (

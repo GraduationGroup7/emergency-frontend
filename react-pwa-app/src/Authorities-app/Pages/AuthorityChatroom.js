@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useParams, useSearchParams } from "react-router-dom";
-import {
-  get_authority_messages,
-  get_messages,
-  send_chat_message,
-  send_authority_message,
-} from "../API/API";
+import { useParams } from "react-router-dom";
+import { get_authority_messages, send_authority_message } from "../../API/API";
 import { useSelector } from "react-redux";
-import { pusher } from "./Login";
-import { useNavigate } from "react-router-dom";
 
-export default function Chatroom({ chatRoomType }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+import { useNavigate } from "react-router-dom";
+import { pusher } from "../../Pages/Login";
+
+export default function AuthorityChatroom() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -26,35 +21,20 @@ export default function Chatroom({ chatRoomType }) {
   const userInfo = useSelector((state) => state.userInfo.value);
   useEffect(() => {
     try {
-      if (searchParams.get("chatRoomType") === "agent_chat") {
-        // agent-authority chats
-        const channel = pusher.subscribe(`private-agent-chat.${chatroom_id}`);
-        channel.bind("message", (data) => {
-          console.log("I got called");
-          appendMsg(data.user.name, data.chatMessage.message);
-        });
-      } else {
-        // normal agent-customer chat
-        const channel = pusher.subscribe(`private-chat.${chatroom_id}`);
-        channel.bind("message", (data) => {
-          console.log("I got called");
-          appendMsg(data.user.id, data.chatMessage.message);
-        });
-      }
+      const channel = pusher.subscribe(`private-agent-chat.${chatroom_id}`);
+      channel.bind("message", (data) => {
+        console.log("I got called");
+        appendMsg(data.user.name, data.chatMessage.message);
+      });
       console.log(pusher);
     } catch (error) {
       console.log(error);
       navigate("/");
     }
 
-    // clean up code
     return () => {
       if (pusher) {
-        if (searchParams.get("chatRoomType") === "agent_chat") {
-          pusher.unsubscribe(`private-agent-chat.${chatroom_id}`);
-        } else {
-          pusher.unsubscribe(`private-chat.${chatroom_id}`);
-        }
+        pusher.unsubscribe(`chat.${chatroom_id}`);
       }
     };
   }, []);
@@ -66,24 +46,16 @@ export default function Chatroom({ chatRoomType }) {
   }
   function onSubmit(e) {
     e.preventDefault();
-    if (searchParams.get("chatRoomType") === "agent_chat") {
-      send_authority_message(chatroom_id, { message });
-    } else {
-      send_chat_message(chatroom_id, { message });
-    }
-
+    send_authority_message(chatroom_id, { message });
     // commented for now, duplicate messages
-    // appendMsg(userInfo.name, message);
+    //appendMsg(userInfo.name, message);
   }
 
   useEffect(() => {
     // declare the data fetching function
     (async () => {
       try {
-        let res =
-          searchParams.get("chatRoomType") === "agent_chat"
-            ? await get_authority_messages(chatroom_id)
-            : await get_messages(chatroom_id);
+        let res = await get_authority_messages(chatroom_id);
         res = res.data.data;
         console.log(res);
         setMessages(res.data);
@@ -104,10 +76,7 @@ export default function Chatroom({ chatRoomType }) {
       page: paginatationData.page + 1,
     };
     try {
-      let res =
-        searchParams.get("chatRoomType") === "agent_chat"
-          ? await get_authority_messages(chatroom_id)
-          : await get_messages(chatroom_id);
+      let res = await get_authority_messages(chatroom_id, newParams);
       res = res.data.data;
       console.log(res);
       setMessages([...messages, ...res.data]);
@@ -121,7 +90,7 @@ export default function Chatroom({ chatRoomType }) {
     }
   }
   return (
-    <>
+    <div className="dashboard__container d-flex flex-column">
       <div className="chatroom__header__container d-flex justify-content-between align-items-center">
         <i
           onClick={() => navigate(-1)}
@@ -132,7 +101,7 @@ export default function Chatroom({ chatRoomType }) {
           className="general__mobile__title mb-0"
           style={{ "font-size": "1.35rem" }}
         >
-          Chatroom {chatroom_id}
+          Authority Chatroom {chatroom_id}
         </h1>
         <div></div>
       </div>
@@ -200,6 +169,6 @@ export default function Chatroom({ chatRoomType }) {
           </Button>
         </Form.Group>
       </Form>
-    </>
+    </div>
   );
 }

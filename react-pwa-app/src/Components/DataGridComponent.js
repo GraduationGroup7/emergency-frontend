@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { bulk_delete, get_table_data } from "../API/API";
+import {
+  bulk_delete,
+  get_mergable_emergencies,
+  get_table_data,
+} from "../API/API";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,12 +12,16 @@ import { updateError } from "../redux/errorInfoSlice";
 import { Button } from "react-bootstrap";
 import { toggle } from "../redux/successInfoSlice";
 
-export default function DataGridComponent({ table_name }) {
+export default function DataGridComponent({
+  table_name,
+  selectedRows,
+  setSelectedRows,
+  emergencyId,
+}) {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(1);
   const [sortModel, setSortModel] = useState({});
-  const [selectedRows, setSelectedRows] = useState([]);
   const [tableParams, setTableParams] = useState({
     page: page,
     total: 0,
@@ -33,10 +41,19 @@ export default function DataGridComponent({ table_name }) {
           page: page,
           ...sortModel,
         }).toString();
-        let res = await get_table_data(table_name, searchParams);
+        let res;
+        if (table_name === "mergable-emergencies") {
+          res = await get_mergable_emergencies(emergencyId);
+        } else {
+          res = await get_table_data(table_name, searchParams);
+        }
+
         setRows(res.data.data);
         console.log("NO of Rows " + res.data.data.length);
-        setColumns(res.data.columns);
+        let modifiedCols = res.data.columns.map((column) => {
+          return { ...column, flex: 1 };
+        });
+        setColumns(modifiedCols);
         setTableParams({
           ...res.data.meta,
           perPage: parseInt(res.data.meta.per_page),
@@ -54,28 +71,28 @@ export default function DataGridComponent({ table_name }) {
     })();
   }, [page, sortModel, table_name, tableParams.total]);
 
-  async function handleDelete() {
-    try {
-      bulk_delete(`${table_name}/bulk_delete`, { ids: selectedRows });
-      dispatch(toggle());
-      setTableParams((prevValue) => ({
-        ...prevValue,
-        total: prevValue.total - selectedRows.length,
-      }));
-    } catch (error) {
-      console.log("unsuccesful delete Attempt ", error);
-      dispatch(
-        updateError({
-          techError: error.message,
-          descriptiveError: error.response.data.data,
-        })
-      );
-    }
-  }
+  // async function handleDelete() {
+  //   try {
+  //     bulk_delete(`${table_name}/bulk_delete`, { ids: selectedRows });
+  //     dispatch(toggle());
+  //     setTableParams((prevValue) => ({
+  //       ...prevValue,
+  //       total: prevValue.total - selectedRows.length,
+  //     }));
+  //   } catch (error) {
+  //     console.log("unsuccesful delete Attempt ", error);
+  //     dispatch(
+  //       updateError({
+  //         techError: error.message,
+  //         descriptiveError: error.response.data.data,
+  //       })
+  //     );
+  //   }
+  // }
 
   // to fix the row count issue, look here: https://mui.com/x/react-data-grid/pagination/#basic-implementation
   const [rowCountState, setRowCountState] = useState(tableParams.total);
-  React.useEffect(() => {
+  useEffect(() => {
     setRowCountState((prevRowCountState) =>
       tableParams.total !== undefined ? tableParams.total : prevRowCountState
     );
@@ -83,7 +100,6 @@ export default function DataGridComponent({ table_name }) {
 
   return (
     <>
-      <Button onClick={handleDelete}>Delete</Button>
       <div className="w-100" style={{ height: "93%" }}>
         <DataGrid
           rows={rows}
@@ -105,7 +121,11 @@ export default function DataGridComponent({ table_name }) {
           onRowClick={(event, details) => {
             console.log("row clicked", table_name);
             console.log("row clicked", event);
-            navigate(`form/${table_name}/${event.id}`);
+            navigate(
+              `form/${
+                table_name === "available-agents" ? "agents" : table_name
+              }/${event.id}`
+            );
           }}
           rowCount={rowCountState}
           onPageChange={(page, details) => {

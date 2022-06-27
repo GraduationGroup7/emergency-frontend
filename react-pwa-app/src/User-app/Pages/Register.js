@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register_customer } from "../../API/API";
 import { Form, Button } from "react-bootstrap";
 import { updateError } from "../../redux/errorInfoSlice";
@@ -40,7 +40,8 @@ export default function Register() {
     try {
       let response = await register_customer(obj);
       response = response.data;
-      // localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("authToken", response.data.token);
+
       // console.log("response is: ", response);
       // console.log("response data is: ", response.data);
       // console.log("response request_id is: ", response.data.request_id);
@@ -62,13 +63,21 @@ export default function Register() {
 
   return (
     <>
-      <div className="general-mobile-container registration-form-container">
-        <h1 className="registration-form-title">Create an Account</h1>
+      <div className="general__mobile__container registration__form__container">
+        <div className="text-center mx-3">
+          <h1 className="registration__form__title">Sign Up</h1>
+          <p className="registration__form__subtitle">
+            Enter your details to create a user account
+          </p>
+        </div>
 
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label className="registration__form__label">
+              Email address
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="email"
               placeholder="Enter email"
@@ -77,13 +86,16 @@ export default function Register() {
                 setEmailValue(e.target.value);
               }}
             />
-            <Form.Text className="text-muted">
+            <Form.Text className="text-muted d-none">
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicFirstName">
-            <Form.Label>First Name</Form.Label>
+            <Form.Label className="registration__form__label">
+              First Name
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="text"
               placeholder="Enter First Name"
@@ -94,8 +106,11 @@ export default function Register() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicLastName">
-            <Form.Label>Last Name</Form.Label>
+            <Form.Label className="registration__form__label">
+              Last Name
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="text"
               placeholder="Enter Last Name"
@@ -104,8 +119,11 @@ export default function Register() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label className="registration__form__label">
+              Phone Number
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="number"
               placeholder="Enter Phone Number"
@@ -115,8 +133,11 @@ export default function Register() {
             <Form.Text>Make sure the number starts with 90</Form.Text>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label className="registration__form__label">
+              Password
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="password"
               placeholder="Password"
@@ -125,8 +146,11 @@ export default function Register() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicDoB">
-            <Form.Label>Date of Birth</Form.Label>
+            <Form.Label className="registration__form__label">
+              Date of Birth
+            </Form.Label>
             <Form.Control
+              className="registration__form__input"
               required
               type="date"
               placeholder="Enter Date"
@@ -135,9 +159,17 @@ export default function Register() {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button
+            className="registration__form__button mb-2"
+            variant="primary"
+            type="submit"
+            block
+          >
             Register
           </Button>
+          <Link className="text-decoration-none" to={"/"}>
+            Go Back
+          </Link>
         </Form>
       </div>
     </>

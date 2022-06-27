@@ -3,8 +3,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Form, Button, Spinner, ToggleButton, Col, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { get_form_format, update_item } from "../API/API";
+import {
+  create_from_form,
+  get_form_format,
+  send_init_message,
+  update_item,
+} from "../API/API";
 import { updateError } from "../redux/errorInfoSlice";
+import { toggle } from "../redux/successInfoSlice";
 
 export default function UpdateView({ formType, id }) {
   const dispatch = useDispatch();
@@ -16,7 +22,7 @@ export default function UpdateView({ formType, id }) {
     (async () => {
       try {
         let res = await get_form_format(
-          id === "create-form" ? `${formType}/${id}` : `${formType}/${id}/form`
+          id === "create_form" ? `${formType}/${id}` : `${formType}/${id}/form`
         );
         // 1st one is axios, 2nd is kaan's middleware, 3rd is resources's data
         res = res.data.data;
@@ -50,6 +56,18 @@ export default function UpdateView({ formType, id }) {
     // means we want to create a new user/authority/emergency
     if (id === "create_form") {
       console.log("you are trying to create a new item");
+      try {
+        let res = await create_from_form(`${formType}`, reqBody);
+        dispatch(toggle());
+      } catch (error) {
+        console.log("unsuccesful creating Attempt ", error);
+        dispatch(
+          updateError({
+            techError: error.message,
+            descriptiveError: error.response.data.data,
+          })
+        );
+      }
     } else {
       try {
         let res = await update_item(`${formType}/${id}`, reqBody);
@@ -64,6 +82,20 @@ export default function UpdateView({ formType, id }) {
       }
     }
   }
+
+  async function sendMessage(body) {
+    try {
+      let res = await send_init_message({ agent_id: id });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      dispatch(updateError(error.message));
+    }
+  }
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const updateFormField = (field, value) => {
     console.log(field, value);
@@ -86,21 +118,37 @@ export default function UpdateView({ formType, id }) {
         controlId="formBasicEmail"
       >
         <Form.Label>{field.title}</Form.Label>
+        {/* #TODO: Document this*/}
+        {/* BIG TERNARY APPROACHING!!!!! */}
         {field.type === "checkbox" ? (
-          <Form.Control
-            type={field.type}
-            placeholder={`Enter ${field.title}`}
-            checked={true}
+          <Form.Check
             disabled={field.disabled}
+            checked={field.value ? true : false}
             onChange={(e) => {
-              updateFormField(field.field, e.target.value);
+              updateFormField(field.field, !field.value);
             }}
           />
+        ) : field.type === "select" ? (
+          <Form.Select
+            aria-label="Default select example"
+            disabled={field.options.length <= 0 || field.disabled}
+            value={field.value}
+            onChange={(e) => updateFormField(field.field, e.target.value)}
+          >
+            {field.options.map((elem) => {
+              return (
+                <option key={elem.id} value={elem.id}>
+                  {elem.name}
+                </option>
+              );
+            })}
+          </Form.Select>
         ) : (
           <Form.Control
             type={field.type}
             placeholder={`Enter ${field.title}`}
             value={field.value === null ? undefined : field.value}
+            required
             disabled={field.disabled}
             onChange={(e) => {
               updateFormField(field.field, e.target.value);
@@ -117,11 +165,29 @@ export default function UpdateView({ formType, id }) {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Form onSubmit={onSubmit}>
+        <Form as={Row} onSubmit={onSubmit}>
           {formView}
-          <Button variant="primary" type="submit">
-            Register
-          </Button>
+          <Col md={6}>
+            <Button className="w-100" variant="primary" type="submit">
+              Register
+            </Button>
+          </Col>
+
+          {formType === "agents" ? (
+            <Col md={6}>
+              <Button
+                className="w-100"
+                onClick={() => {
+                  sendMessage();
+                }}
+                variant="primary"
+              >
+                Send Text Message
+              </Button>
+            </Col>
+          ) : (
+            <></>
+          )}
         </Form>
       )}
     </>

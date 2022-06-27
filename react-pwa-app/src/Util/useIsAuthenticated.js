@@ -29,6 +29,8 @@ export default function useIsAuthenticated() {
     return userInfo.type === "authority" || userInfo.type === "admin";
   } else if (formType === "authorities" || formType === "customers") {
     return userInfo.type === "admin";
+  } else if (formType === "sms-verify") {
+    return localStorage.getItem("authToken");
   }
 
   if (!authToken) {

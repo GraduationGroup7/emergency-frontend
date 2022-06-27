@@ -4,7 +4,7 @@
 @import '../../node_modules/bootstrap/scss/_functions';
 @import '../../node_modules/bootstrap/scss/_variables';
 @import '../../node_modules/bootstrap/scss/mixins/_breakpoints';
-@import "./reset", "./login", "./authority", "./mobile";
+@import "./reset", "./login", "./authority", "./mobile", "./user";
 
 
 body {
@@ -16,5 +16,8 @@ body {
     width: 100%;
     height: 100%;
 }
-
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";

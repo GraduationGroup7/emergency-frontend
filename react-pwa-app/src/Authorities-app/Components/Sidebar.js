@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Collapse, Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function Sidebar({ tableName, setTableName }) {
   let navigate = useNavigate();
+  const userInfo = useSelector((state) => state.userInfo.value);
   const [routes, setRoutes] = useState([
     {
-      name: "New Reports",
+      name: "Emergencies",
       path: "",
       icon: "bi bi-exclamation-circle",
     },
-    { name: "Archive", path: "archive", icon: "bi bi-inboxes" },
   ]);
   const [agentsOpen, setAgentsOpen] = useState(false);
   const location = useLocation();
@@ -21,15 +22,16 @@ export default function Sidebar({ tableName, setTableName }) {
   return (
     <div className="sidebar__container">
       <div className="sidebar__main__content">
-        <div className="logo__container">
+        <div onClick={() => navigate("/authority")} className="logo__container">
           <img className="logo__image" src="/Images/logo-svg.svg" alt="" />
           <div className="logo__text">YARDIM</div>
         </div>
         <div className="username__container d-flex align-items-center">
           <Badge className="username__avatar" bg="primary">
-            AA
+            {userInfo.name.split(" ")[0][0].toUpperCase() +
+              userInfo.name.split(" ")[1][0].toUpperCase()}
           </Badge>
-          <div>Admin Adminson</div>
+          <div>{userInfo.name}</div>
         </div>
         <div className="page__section__container">
           <div className="page__section__title">PAGES</div>
@@ -42,7 +44,7 @@ export default function Sidebar({ tableName, setTableName }) {
             }}
             className={
               (route.path === appletName ||
-              (route.path === "" && appletName === "authority")
+              (route.path === "" && appletName === "authority" && !path[2])
                 ? "sidebar__link__active"
                 : "") + " sidebar__link d-flex"
             }
@@ -75,6 +77,7 @@ export default function Sidebar({ tableName, setTableName }) {
             }
           ></i>
         </div>
+
         <div className="sidebar__link__collapse">
           <Collapse in={agentsOpen}>
             <div id="sidebar__agents__collapse">
@@ -98,7 +101,26 @@ export default function Sidebar({ tableName, setTableName }) {
             </div>
           </Collapse>
         </div>
+        <div className="page__section__container">
+          <div className="page__section__title">CHATS</div>
+        </div>
+        <div
+          onClick={() => {
+            navigate("chatList");
+          }}
+          className={
+            (path[2] === "chatList" ? "sidebar__link__active" : "") +
+            " sidebar__link d-flex align-items-center"
+          }
+        >
+          <i
+            style={{ fontSize: "18px" }}
+            className="bi bi-chat-dots sidebar__link__icon__circle"
+          ></i>
+          Chat
+        </div>
       </div>
+
       <div
         onClick={() => navigate("/")}
         className="logout__area__container d-flex"

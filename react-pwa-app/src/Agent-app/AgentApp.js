@@ -3,7 +3,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import NoPermission from "../Pages/NoPermission";
 import { Navbar, Nav } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-
+import UnauthorizedAccess from "../Components/UnauthorizedAccess";
 export default function AgentApp() {
   const location = useLocation();
   let path = location.pathname.split("/");
@@ -11,17 +11,10 @@ export default function AgentApp() {
   const authToken = localStorage.getItem("authToken");
   return (
     <>
-      <>
-        <div className="d-flex flex-column main-area-minus-bot-nav m-auto overflow-auto">
-          <Outlet></Outlet>
-        </div>{" "}
+      <div className="user__app__container">
+        <Outlet></Outlet>
         {/* bottom navbar */}
-        <Navbar
-          bg="light"
-          expand="lg"
-          fixed="bottom"
-          className="user-bottom-navbar"
-        >
+        <Navbar bg="light" expand="lg" className="user-bottom-navbar">
           {/* <Container id="bottom-nav-container"> */}
           <Nav className="navbar__item__container" id="change-flex-to-row">
             <Nav.Item
@@ -69,7 +62,7 @@ export default function AgentApp() {
                 " nav__item"
               }
             >
-              <Link to={"call-help"} className="link__dark">
+              <Link to={"report"} className="link__dark">
                 <i
                   className={
                     (appletName === "call-help" ? "bi-upload" : "bi-upload") +
@@ -87,7 +80,10 @@ export default function AgentApp() {
           </Nav>
           {/* </Container> */}
         </Navbar>{" "}
-      </>
+      </div>
+      <div className="d-none d-md-block">
+        <UnauthorizedAccess></UnauthorizedAccess>
+      </div>
     </>
   );
 }

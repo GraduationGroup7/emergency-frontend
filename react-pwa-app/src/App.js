@@ -20,9 +20,11 @@ import Chatroom from "./Pages/Chatroom";
 import MainWrapper from "./Pages/MainWrapper";
 import Dashboard from "./Authorities-app/Pages/Dashboard";
 import AuthorityForm from "./Authorities-app/Pages/AuthorityForm";
+import ChatList from "./Authorities-app/Pages/ChatList";
+import AuthorityChatroom from "./Authorities-app/Pages/AuthorityChatroom";
 
 // Agent App Pages
-import EmergencyAssignment from "./Agent-app/EmergencyAssignment";
+import EmergencyAssignment from "./Agent-app/pages/EmergencyAssignment";
 
 // Admin App Pages
 import AdminDashboard from "./Admin-app/pages/AdminDashboard";
@@ -76,6 +78,11 @@ function App() {
               <Route
                 path="form/:formType/:id"
                 element={<AuthorityForm></AuthorityForm>}
+              ></Route>
+              <Route path="chatList" element={<ChatList></ChatList>}></Route>
+              <Route
+                path="chatList/chatroom/:chatroom_id"
+                element={<AuthorityChatroom></AuthorityChatroom>}
               ></Route>
             </Route>
             <Route path="admin" element={<AdminApp />}>

@@ -4,11 +4,11 @@ import { login, get_user_info } from "../API/API";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { replaceUser, updateUser } from "../redux/userInfoSlice";
-import GeneralErrorAlert from "../Components/GeneralErrorAlert";
 import { updateError } from "../redux/errorInfoSlice";
 import config from "../API/config";
 import Pusher from "pusher-js";
 import { toggle } from "../redux/successInfoSlice";
+import GeneralFeedbackToast from "../Components/GeneralFeedbackToast";
 
 let pusher;
 
@@ -39,7 +39,8 @@ function Login() {
       userInfoRequest = userInfoRequest.data;
       dispatch(updateUser(userInfoRequest.data));
 
-      pusher = new Pusher("f06fc2e0e3a78a7ca79b", {
+      console.log("process ENV", process.env.REACT_APP_PUSHER_APP_KEY);
+      pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
         cluster: "eu",
         encrypted: true,
         authEndpoint: `${config.api}/pusher/auth`,
@@ -69,7 +70,7 @@ function Login() {
       dispatch(
         updateError({
           techError: error.message,
-          descriptiveError: error.response.data.data,
+          // descriptiveError: error.response.data.data,
         })
       );
     }
@@ -78,7 +79,11 @@ function Login() {
   return (
     <div className="login__parent__container">
       <div className="login__container">
-        <img src="/Images/logo-svg.svg" alt="" className="logo" />
+        <img
+          src="emergency-frontend/Images/logo-svg.svg"
+          alt=""
+          className="logo"
+        />
         <div className="login__form__container">
           <div className="main__header">
             <h1 className="main__header__title">Login</h1>
@@ -91,6 +96,7 @@ function Login() {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label className="form__label">Email address</Form.Label>
               <Form.Control
+                required
                 className="form__input"
                 type="email"
                 placeholder="Enter email"
@@ -101,10 +107,10 @@ function Login() {
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label className="form__label">Password</Form.Label>
               <Form.Control
+                required
                 className="form__input"
                 type="password"
                 placeholder="Password"
@@ -114,6 +120,7 @@ function Login() {
             </Form.Group>
             <Button
               className="mb-2 submit__button"
+              style={{ marginRight: "8px" }}
               variant="primary"
               type="submit"
             >

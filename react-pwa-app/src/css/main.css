@@ -90,11 +90,15 @@ input {
     font-weight: 500;
   }
   .login__container .login__form__container .form__label {
-    display: none;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 14px;
   }
   .login__container .login__form__container .form__input {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    background-color: #f0ecec !important;
+    border-color: #f0ecec !important;
+    box-shadow: none !important;
+    padding: 12px;
     border-radius: 8px;
   }
   .login__container .login__form__container .submit__button {
@@ -141,6 +145,19 @@ input {
 }
 .login__parent__container .login__container .link__register {
   text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .authority__container {
+    display: none !important;
+  }
+
+  .modal__container__class {
+    display: none !important;
+  }
+}
+.ultra__wide__modal {
+  min-width: 720px;
 }
 
 .authority__container {
@@ -362,10 +379,298 @@ input {
   color: black;
 }
 .navbar__item__container .nav__item__active {
-  background-color: rgba(211, 3, 3, 0.13);
+  background-color: hsla(0deg, 100%, 71%, 0.2);
 }
 .navbar__item__container .nav__item__active .link__dark i {
-  color: #c70101;
+  color: #fe4f4f;
+}
+
+@media screen and (min-width: 768px) {
+  .general__mobile__container {
+    display: none !important;
+  }
+
+  .user-bottom-navbar {
+    display: none !important;
+  }
+
+  .user__app__container {
+    display: none !important;
+  }
+
+  .emergency__assignment__container {
+    display: none !important;
+  }
+}
+.registration__form__container .registration__form__title {
+  font-size: 2.25rem;
+}
+.registration__form__container .registration__form__subtitle {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 500;
+}
+.registration__form__container .registration__form__input {
+  background-color: #f0ecec !important;
+  border-color: #f0ecec !important;
+  box-shadow: none !important;
+  padding: 12px;
+  border-radius: 8px;
+}
+.registration__form__container .registration__form__label {
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.registration__form__container .registration__form__button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.user__app__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.resend__code__button {
+  color: blue;
+}
+
+.general__mobile__container {
+  padding: 12px;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.general__mobile__title {
+  font-size: 2rem;
+}
+
+.emergency__number__icons {
+  font-size: 5rem !important;
+}
+
+.general__mobile__subtitle {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 500;
+}
+
+.general__mobile__label {
+  margin-bottom: 4px !important;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.general__mobile__input {
+  background-color: #f0ecec !important;
+  border-color: #f0ecec !important;
+  box-shadow: none !important;
+  padding: 12px !important;
+  border-radius: 8px !important;
+}
+
+.chat__message__input {
+  background-color: rgb(242, 242, 242) !important;
+  border-color: rgb(242, 242, 242) !important;
+  box-shadow: none !important;
+  padding: 8px !important;
+  border-radius: 8px !important;
+}
+
+.message__send__button {
+  padding: 8px 12px !important;
+  background-color: #6BCB77 !important;
+  border-color: #6BCB77 !important;
+  border-radius: 50% !important;
+  margin-left: 8px;
+}
+.message__send__button i {
+  color: white;
+  font-size: 1rem;
+}
+
+.general__mobile__button {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+}
+
+@-webkit-keyframes ripples {
+  to {
+    box-shadow: 0 0 0 16px rgba(255, 107, 107, 0.2), 0 0 0 32px rgba(255, 107, 107, 0.2), 0 0 0 48px rgba(255, 107, 107, 0.2), 0 0 0 64px rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes ripples {
+  to {
+    box-shadow: 0 0 0 16px rgba(255, 107, 107, 0.2), 0 0 0 32px rgba(255, 107, 107, 0.2), 0 0 0 48px rgba(255, 107, 107, 0.2), 0 0 0 64px rgba(0, 0, 0, 0);
+  }
+}
+.ripple__button__container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ripple__effect__button {
+  padding: 40px 60px;
+  border-radius: 50%;
+  background-color: #FF6B6B;
+}
+.ripple__effect__button i {
+  color: white;
+  font-size: 5rem;
+}
+
+.user__avatar {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 28px 32px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.user__avatar__label {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.ripple__effect__button:before {
+  position: absolute;
+  content: "";
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
+  border-radius: 50%;
+  box-shadow: 0 0 rgba(255, 107, 107, 0.2), 0 0 0 16px rgba(255, 107, 107, 0.2), 0 0 0 32px rgba(255, 107, 107, 0.2), 0 0 0 48px rgba(255, 107, 107, 0.2);
+  z-index: -1;
+  -webkit-animation: ripples 1s linear infinite;
+          animation: ripples 1s linear infinite;
+  transition: 0.5s;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  background-color: #FF6B6B;
+}
+
+.messages__row__container:last-child {
+  border-bottom: none !important;
+}
+
+.chatroom__header__container {
+  padding: 12px;
+}
+
+.message__right__side {
+  margin-left: auto;
+  background-color: #6bb5ff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.chatroom__container {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.message__username__label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.message__left__side {
+  margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.messages__row__container {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.messages__row__container .messages__row__avatar {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 12px 13px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 16px;
+}
+.messages__row__container .messages__row__right {
+  flex: 1;
+}
+.messages__row__container .messages__row__right .messages__row__label {
+  font-size: 17px;
+}
+.messages__row__container .messages__row__right .messages__row__message {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.emergency__assignment__container {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 12px;
+}
+.emergency__assignment__container .unassigned__agent__image {
+  margin-left: auto;
+  width: 60vw;
+  margin-right: auto;
+}
+.emergency__assignment__container .media__area__container {
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: flex;
+  overflow-x: scroll;
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
+}
+.emergency__assignment__container .media__area__container .media__content__holder {
+  height: 100%;
+  min-width: 100%;
+  scroll-snap-align: start;
+}
+.emergency__assignment__container .emergency__type__label {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.emergency__assignment__container .emergency__info__icon {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 6px 9px;
+  font-size: 1.125rem;
+  margin-right: 16px;
+}
+.emergency__assignment__container .emergency__info__label {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  font-weight: 500;
+}
+.emergency__assignment__container .emergency__map__link {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  width: 100%;
 }
 
 body {
@@ -376,6 +681,13 @@ body {
 #root {
   width: 100%;
   height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
 }
 
 /*!

@@ -132,6 +132,7 @@ export default function Report() {
       await create_emergency(formData);
       // emergency created successfully
       setCanvasShow(false);
+      dispatch(toggle());
     } catch (error) {
       //error occured
       console.log(error);
@@ -146,17 +147,22 @@ export default function Report() {
   };
   return (
     <>
-      <>
-        <div className="main-content d-flex justify-content-center flex-column align-items-center m-auto">
-          <h1>Emergency Assitance Needed?</h1>
-          <h5>Press the button to report an emergency</h5>
-          <Button
-            variant="primary"
-            onClick={handleShow}
-            className="main-content__button"
+      <div className="general__mobile__container">
+        <div className="text-center">
+          <h1
+            className="general__mobile__title mx-3"
+            style={{ "font-size": "1.35rem" }}
           >
-            Report an Emergency
-          </Button>
+            Emergency Assistance Needed?
+          </h1>
+          <p className="general__mobile__subtitle">
+            Press the button to report an emergency
+          </p>
+        </div>
+        <div className="ripple__button__container">
+          <div onClick={handleShow} className="ripple__effect__button">
+            <i class="bi bi-broadcast"></i>
+          </div>
         </div>
 
         {/* offcanvas conatianing the form to submit the emergency */}
@@ -201,6 +207,7 @@ export default function Report() {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicDescription">
                 <Form.Control
+                  required
                   type="text"
                   placeholder="Emergency Description"
                   value={emergencyDescription}
@@ -212,7 +219,7 @@ export default function Report() {
             </Form>
           </Offcanvas.Body>
         </Offcanvas>
-      </>
+      </div>
     </>
   );
 }

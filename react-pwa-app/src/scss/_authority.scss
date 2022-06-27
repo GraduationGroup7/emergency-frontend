@@ -1,3 +1,14 @@
+@media screen and (max-width: 768px) {
+    .authority__container {
+        display: none !important;
+    } 
+    .modal__container__class {
+        display: none !important;
+    }
+}
+.ultra__wide__modal {
+    min-width: 720px;
+}
 .authority__container {
     display: grid;
     grid-template-columns: 250px minmax(0,auto);
