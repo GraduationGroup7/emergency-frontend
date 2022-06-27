@@ -23,8 +23,8 @@ export default function AuthorityChatroom() {
     try {
       const channel = pusher.subscribe(`private-agent-chat.${chatroom_id}`);
       channel.bind("message", (data) => {
-        console.log("I got called");
-        appendMsg(data.user.name, data.chatMessage.message);
+        console.log("I got called", data);
+        appendMsg(data.user.id, data.chatMessage.message, data.user.name);
       });
       console.log(pusher);
     } catch (error) {
@@ -41,8 +41,11 @@ export default function AuthorityChatroom() {
 
   let { chatroom_id } = useParams();
 
-  function appendMsg(userId, message) {
-    setMessages((prevValue) => [{ user_id: userId, message }, ...prevValue]);
+  function appendMsg(userId, message, name) {
+    setMessages((prevValue) => [
+      { user_id: userId, message, user_name: name },
+      ...prevValue,
+    ]);
   }
   function onSubmit(e) {
     e.preventDefault();

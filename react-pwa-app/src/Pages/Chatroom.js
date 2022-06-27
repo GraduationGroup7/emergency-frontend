@@ -31,7 +31,7 @@ export default function Chatroom({ chatRoomType }) {
         const channel = pusher.subscribe(`private-agent-chat.${chatroom_id}`);
         channel.bind("message", (data) => {
           console.log("I got called");
-          appendMsg(data.user.name, data.chatMessage.message);
+          appendMsg(data.user.name, data.chatMessage.message, data.user.name);
         });
       } else {
         // normal agent-customer chat
@@ -61,8 +61,11 @@ export default function Chatroom({ chatRoomType }) {
 
   let { chatroom_id } = useParams();
 
-  function appendMsg(userId, message) {
-    setMessages((prevValue) => [{ user_id: userId, message }, ...prevValue]);
+  function appendMsg(userId, message, name) {
+    setMessages((prevValue) => [
+      { user_id: userId, message, user_name: name },
+      ...prevValue,
+    ]);
   }
   function onSubmit(e) {
     e.preventDefault();
