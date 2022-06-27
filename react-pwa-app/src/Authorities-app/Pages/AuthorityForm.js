@@ -106,8 +106,8 @@ export default function AuthorityForm() {
       );
       console.log(res);
       dispatch(toggle());
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       dispatch(updateError(error.message));
     }
   };
